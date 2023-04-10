@@ -5,4 +5,4 @@
 ### Database: multi-sim-psqldb
 ### Port: 5432
 ### Host: localhost
-##### anyway you can find the credentials also in the <a href = "/src/main/resources/application.properties">application.properties</a>file
+##### anyway you can find the credentials also in the <a href = "/src/main/resources/application.properties">application.properties</a> file
