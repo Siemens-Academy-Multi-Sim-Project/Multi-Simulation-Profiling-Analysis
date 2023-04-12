@@ -18,9 +18,6 @@ import com.example.multisimulationprofiling.utils.csv.exceptions.DelimiterExcept
 public abstract class CsvProperty {
     protected final String propertyName;
     protected final List<String> possibleDelimiters;
-    
-    public String getPropertyName(){ return propertyName; }
-    public List<String> getDelimiters(){ return possibleDelimiters; }
 
     public CsvProperty(String name, String ...delimiters){
         this.propertyName = name;
@@ -43,6 +40,8 @@ public abstract class CsvProperty {
         File csvFile = new File(csvFilePath);
         return parseProperty(csvFile);
     }
+
+
     /**
      * Main function that parses the row and returnes a hashmap of property name and its value
      * @throws IOException If reading the csv was unsuccessful in any way
@@ -50,6 +49,7 @@ public abstract class CsvProperty {
      * @param csvFile A file object of the csv file itself
      */
     public abstract HashMap<String, String> parseProperty(File csvFile) throws DelimiterException, IOException;
+
 
     /**
      * Abstract function responsible for searching the file for the desired property
