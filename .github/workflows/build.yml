@@ -17,4 +17,4 @@ jobs:
         run: mvn --batch-mode --update-snapshots package
       - name: Commit Packaged file
         run: | 
-          ls
+          ls -R
