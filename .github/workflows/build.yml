@@ -15,3 +15,6 @@ jobs:
           distribution: 'temurin'
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots package
+      - name: Commit Packaged file
+        run: | 
+          ls
