@@ -1,6 +1,21 @@
 version: '3.9'
 
 services:
+  app:
+    image: multisim-backend:latest
+    build:
+      context: .
+    container_name: backend
+    depends_on:
+      - java_db
+    environment:
+      DB_USERNAME: siemens-project
+      DB_PASSWORD: 1010abab
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      DB_URL: jdbc:postgresql://java_db:5432/multi-sim-psqldb
+    ports:
+      - "8080:8080"
+
   java_db:
     container_name: java_db
     image: postgres:12
