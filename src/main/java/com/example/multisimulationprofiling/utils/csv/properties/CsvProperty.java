@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.example.multisimulationprofiling.utils.csv.dataholders.BaseDataHolder;
 import com.example.multisimulationprofiling.utils.csv.exceptions.DelimiterException;
 
 /**
@@ -17,11 +18,13 @@ import com.example.multisimulationprofiling.utils.csv.exceptions.DelimiterExcept
  * 
  * @param name The key of the property you want to extract
  * @param delimiters One or more delimiter that is expected to be found in that csv row
+ * @param DATA_HOLDER_TYPE extends {@code BaseDataHolder} A class type to hold the parsed data and fits the structure of the parsed data
  * <p>Note: Only one delimiter can exist in one row at any time, and this functionality is purely meant for cases where the same row exists in multiple files but with different delimiter in each file</p>
  */
-public abstract class CsvProperty {
+public abstract class CsvProperty <DATA_HOLDER_TYPE extends BaseDataHolder> {
     protected final String propertyName;
     protected final List<String> possibleDelimiters;
+    protected DATA_HOLDER_TYPE data;
 
     public CsvProperty(String name, String ...delimiters){
         this.propertyName = name;
@@ -30,29 +33,29 @@ public abstract class CsvProperty {
         for(String delimiter: delimiters){
             delimitersArr.add(delimiter);
         }
-
+        data.init();
         this.possibleDelimiters = delimitersArr;
     }
 
     /**
-     * Main function that parses the row and returnes a hashmap of property name and its value
+     * Main function that parses the row and returnes the associated dataholder
      * @throws IOException If reading the csv was unsuccessful in any way
      * @throws DelimiterException If zero or more than one delimiter was found in the same row
      * @param csvFilePath A path pointing to the csv file
      */
-    public HashMap<String, String> parseProperty(String csvFilePath) throws DelimiterException, IOException{
+    public DATA_HOLDER_TYPE parseProperty(String csvFilePath) throws DelimiterException, IOException{
         File csvFile = new File(csvFilePath);
         return parseProperty(csvFile);
     }
 
 
     /**
-     * Main function that parses the row and returnes a hashmap of property name and its value
+     * Main function that parses the row and returnes the associated dataholder
      * @throws IOException If reading the csv was unsuccessful in any way
      * @throws DelimiterException If zero or more than one delimiter was found in the same row
      * @param csvFile A file object of the csv file itself
      */
-    public abstract HashMap<String, String> parseProperty(File csvFile) throws DelimiterException, IOException;
+    public abstract DATA_HOLDER_TYPE parseProperty(File csvFile) throws DelimiterException, IOException;
 
 
     /**

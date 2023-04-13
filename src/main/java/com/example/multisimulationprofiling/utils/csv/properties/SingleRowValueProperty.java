@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import com.example.multisimulationprofiling.utils.StringUtils;
+import com.example.multisimulationprofiling.utils.csv.dataholders.SingleRowValueDataHolder;
 import com.example.multisimulationprofiling.utils.csv.exceptions.DelimiterException;
 
 /**
@@ -26,27 +27,29 @@ import com.example.multisimulationprofiling.utils.csv.exceptions.DelimiterExcept
  * <p>Note: Only one delimiter can exist in one row at any time, and this functionality is purely meant for cases where the same row exists in multiple files but with different delimiter in each file</p>
  * 
  */
-public class SingleRowValueProperty extends CsvProperty {
+
+
+public class SingleRowValueProperty extends CsvProperty<SingleRowValueDataHolder> {
 
     public SingleRowValueProperty(String name, String ...delimiters) {
         super(name, delimiters);
+        data.key = name;
     }
 
 
 
     @Override
-    public HashMap<String, String> parseProperty(File csvFile) throws IOException, DelimiterException {
+    public SingleRowValueDataHolder parseProperty(File csvFile) throws IOException, DelimiterException {
         var foundLines = findProperty(csvFile);
-        var returnHashMap = new HashMap<String, String>();
-        for(String line: foundLines){
-            var lineDelimiter = findDelimiter(line);
-            String[] splittedLine = line.split( Pattern.quote(lineDelimiter) );
-            String[] trimmedLine = StringUtils.trim(splittedLine);
+        
+        
+        String line = foundLines.get(0);
+        var lineDelimiter = findDelimiter(line);
+        String[] splittedLine = line.split( Pattern.quote(lineDelimiter) );
+        String[] trimmedLine = StringUtils.trim(splittedLine);
 
-            returnHashMap.put(propertyName, trimmedLine[1]);
-        }
-
-        return returnHashMap;
+        data.value = trimmedLine[1];
+        return data;
     }
 
     /**
