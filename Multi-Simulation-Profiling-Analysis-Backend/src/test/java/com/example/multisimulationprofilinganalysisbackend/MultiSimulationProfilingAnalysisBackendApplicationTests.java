@@ -1,10 +1,10 @@
-package com.example.multisimulationprofiling;
+package com.example.multisimulationprofilinganalysisbackend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MultiSimulationProfilingApplicationTests {
+class MultiSimulationProfilingAnalysisBackendApplicationTests {
 
     @Test
     void contextLoads() {
