@@ -21,7 +21,7 @@ public class ProfilingDataController {
 
     @PostMapping("profiling-data/add")
     public ResponseEntity<ProfilingData> addProfilingData(@RequestBody ProfilingData profilingData) {
-        ProfilingData res = new ProfilingData();
+        /*ProfilingData res = new ProfilingData();
         res.setId(profilingData.getId());
         res.setMethodology(profilingData.getMethodology());
         res.setDesignType(profilingData.getDesignType());
@@ -44,8 +44,9 @@ public class ProfilingDataController {
         res.setDesignCompositionInterfaces(profilingData.getDesignCompositionInterfaces());
         res.setDesignCompositionInstances(profilingData.getDesignCompositionInstances());
 
-        profilingDataRepository.save(res);
-        return ResponseEntity.ok(res);
+        profilingDataRepository.save(res);*/
+        profilingDataRepository.save(profilingData);
+        return ResponseEntity.ok(profilingData);
     }
 
 }

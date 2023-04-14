@@ -3,6 +3,8 @@ package com.example.multisimulationprofilinganalysisbackend.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "ProfilingData")
@@ -95,6 +97,9 @@ public class ProfilingData {
     @Column(name = "DesignCompositionInstances", nullable = true)
     private String designCompositionInstances;
 
+
+    @OneToMany(mappedBy = "profilerId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<DesignUnit> designUnits = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -262,5 +267,13 @@ public class ProfilingData {
 
     public void setDesignCompositionInstances(String designCompositionInstances) {
         this.designCompositionInstances = designCompositionInstances;
+    }
+
+    public List<DesignUnit> getDesignUnits() {
+        return designUnits;
+    }
+
+    public void setDesignUnits(List<DesignUnit> designUnits) {
+        this.designUnits = designUnits;
     }
 }
