@@ -21,30 +21,6 @@ public class ProfilingDataController {
 
     @PostMapping("profiling-data/add")
     public ResponseEntity<ProfilingData> addProfilingData(@RequestBody ProfilingData profilingData) {
-        /*ProfilingData res = new ProfilingData();
-        res.setId(profilingData.getId());
-        res.setMethodology(profilingData.getMethodology());
-        res.setDesignType(profilingData.getDesignType());
-        res.setToolVersion(profilingData.getToolVersion());
-        res.setPlatform(profilingData.getPlatform());
-        res.setDateOfCollection(profilingData.getDateOfCollection());
-        res.setTotalWallTime(profilingData.getTotalWallTime());
-        res.setSolverWallTime(profilingData.getSolverWallTime());
-        res.setSolverMemory(profilingData.getSolverMemory());
-        res.setRandomizeCall(profilingData.getRandomizeCall());
-        res.setVoptTime(profilingData.getVoptTime());
-        res.setVoptMemory(profilingData.getVoptMemory());
-        res.setVoptCMDCommand(profilingData.getVoptCMDCommand());
-        res.setVsimTime(profilingData.getVsimTime());
-        res.setVsimMemory(profilingData.getVsimMemory());
-        res.setVsimCMDCommand(profilingData.getVsimCMDCommand());
-        res.setDesignCompositionName(profilingData.getDesignCompositionName());
-        res.setDesignCompositionModules(profilingData.getDesignCompositionModules());
-        res.setDesignCompositionPackages(profilingData.getDesignCompositionPackages());
-        res.setDesignCompositionInterfaces(profilingData.getDesignCompositionInterfaces());
-        res.setDesignCompositionInstances(profilingData.getDesignCompositionInstances());
-
-        profilingDataRepository.save(res);*/
         profilingDataRepository.save(profilingData);
         return ResponseEntity.ok(profilingData);
     }
