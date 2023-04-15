@@ -71,7 +71,7 @@ public class QuestaSimTableCsvProperty extends CsvProperty<TableDataHolder> {
     }
 
     @Override
-    public TableDataHolder onCreateDataHolder() {
+    protected TableDataHolder onCreateDataHolder() {
         return new TableDataHolder(this.propertyName);
     }
 

@@ -51,7 +51,7 @@ public abstract class CsvProperty <DATA_HOLDER_TYPE extends BaseDataHolder> {
      * abstract initilization function to init the data holder
      * @return the initilized dataholder 
      */
-    public abstract DATA_HOLDER_TYPE onCreateDataHolder();
+    protected abstract DATA_HOLDER_TYPE onCreateDataHolder();
 
     public DATA_HOLDER_TYPE getHolder(){ return dataHolder; }
 

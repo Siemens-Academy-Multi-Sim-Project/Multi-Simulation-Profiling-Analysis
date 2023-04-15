@@ -64,7 +64,7 @@ public class SingleRowCsvProperty extends CsvProperty<SingleRowValueDataHolder> 
 
 
     @Override
-    public SingleRowValueDataHolder onCreateDataHolder() {
+    protected SingleRowValueDataHolder onCreateDataHolder() {
         var holder = new SingleRowValueDataHolder(this.propertyName);
         return holder;
     }
