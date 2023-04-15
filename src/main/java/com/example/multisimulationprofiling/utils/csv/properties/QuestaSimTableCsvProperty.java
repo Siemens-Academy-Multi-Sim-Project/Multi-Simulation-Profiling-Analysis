@@ -1,8 +1,6 @@
 package com.example.multisimulationprofiling.utils.csv.properties;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +18,11 @@ import com.example.multisimulationprofiling.utils.csv.exceptions.DelimiterExcept
  *  </p>
  *  <p>
  *  Column 1 | Column 2 | Column 3 | Column 4
+ *  </p>
+ *  <p>
+ *  =====================================================</p><p>
+ *  === End '/Design Unit (Vsim Performance Profiler)' Report
+ *  =====================================================
  *  </p>
  * @param name The name of the table you want to extract
  * @param delimiters One or more delimiter that is expected to be found in one table row
@@ -69,7 +72,7 @@ public class QuestaSimTableCsvProperty extends CsvProperty<TableDataHolder> {
 
     @Override
     public TableDataHolder onCreateDataHolder() {
-        return new TableDataHolder();
+        return new TableDataHolder(this.propertyName);
     }
 
 }

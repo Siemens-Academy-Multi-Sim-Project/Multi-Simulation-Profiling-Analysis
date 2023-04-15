@@ -1,11 +1,8 @@
 package com.example.multisimulationprofiling.utils.csv;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,13 +10,21 @@ import com.example.multisimulationprofiling.utils.csv.dataholders.BaseDataHolder
 import com.example.multisimulationprofiling.utils.csv.exceptions.DelimiterException;
 import com.example.multisimulationprofiling.utils.csv.properties.CsvProperty;
 import com.example.multisimulationprofiling.utils.csv.properties.QuestaSimTableCsvProperty;
-import com.example.multisimulationprofiling.utils.csv.properties.SingleRowValueProperty;
+import com.example.multisimulationprofiling.utils.csv.properties.SingleRowCsvProperty;
 
+/**
+ * CSV driver class, this class is responsive for taking user defined properties and a file, 
+ * then searches and extracts these properties
+ */
 public class CSVParser {
     private HashMap<String, CsvProperty<BaseDataHolder>> properties;
     private HashMap<String, BaseDataHolder> parsedProperties;
     private final int BUFFERED_REDER_READ_LIMIT = 8192;
 
+    /**
+     * Main constructor
+     * @param properties collection of CsvProperties
+     */
     @SafeVarargs
     public CSVParser(CsvProperty... properties){
         this.properties = new HashMap<>();
@@ -29,22 +34,27 @@ public class CSVParser {
         }
     }
 
-    public ArrayList<BaseDataHolder> parseFile(String filePath) throws DelimiterException, IOException{
-        ArrayList<BaseDataHolder> holders = new ArrayList<>();
+    /**
+     * 
+     * @param filePath a path pointing to the file you want to parse
+     * @return hashmap containing names and dataholders of successfully parsed properties
+     */
+    public HashMap<String, BaseDataHolder> parseFile(String filePath) throws DelimiterException, IOException{
+        parsedProperties.clear();
         try (BufferedReader fileReader = new BufferedReader(new FileReader(filePath))) {
             for(String line = fileReader.readLine(); line != null; line = fileReader.readLine()){
                 for(CsvProperty<BaseDataHolder> property: properties.values()){
                     if(property.isParsed()){
                         continue;
                     }
-                    fileReader.mark(BUFFERED_REDER_READ_LIMIT); // mark where the property will search in the file
-                    List<String> foundLines = property.findProperty(fileReader); // pass fileReader to property
+
+                    fileReader.mark(BUFFERED_REDER_READ_LIMIT); // mark where the property will start searching in the file
+                    List<String> foundLines = property.findProperty(fileReader); // pass fileReader to property to start the search
                     if(foundLines.isEmpty()){ // property wasn't found, so reset to original position
                         fileReader.reset();
                     }else{
                         var parsedProperty = property.parseProperty(foundLines);
                         this.parsedProperties.put(property.getPropertyName(), parsedProperty);
-                        holders.add(parsedProperty);
                     }
                 }
             }
@@ -52,26 +62,27 @@ public class CSVParser {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return holders;
+        return this.parsedProperties;
     }
 
+    /**
+     * @param propertyName property name of the data holder you want to get
+     * @param <DATA_HOLDER> Type of dataholder related to the property provided
+     * @return data holder of the given property name
+     */
     public <DATA_HOLDER extends BaseDataHolder> DATA_HOLDER getHolder(String propertyName){
         return (DATA_HOLDER) properties.get(propertyName).getHolder();
     }
 
     public static void main(String[] args) throws DelimiterException, IOException {
         CSVParser parser = new CSVParser(
-            new SingleRowValueProperty("Vsim Time", "|"),
-            new SingleRowValueProperty("Vopt Time", "|"),
-            new SingleRowValueProperty("Vopt Memory", "|"),
-            new SingleRowValueProperty("Vsim Memory", "|"),
-            new QuestaSimTableCsvProperty("/Design Unit", "|")
+            new SingleRowCsvProperty("Vsim Time", ","),
+            new SingleRowCsvProperty("Vopt Time", ","),
+            new SingleRowCsvProperty("Vopt Memory", ","),
+            new SingleRowCsvProperty("Vsim Memory", ",")
+            // new QuestaSimTableCsvProperty("/Design Unit", "|")
         );
 
-        var w = parser.parseFile("sample-data/ethmac_554.csv");
-
-        for(var q: w){
-            q.print();
-        }
+        parser.parseFile("sample-data/Silabs_design_usage_profiler_data.csv");
     }
 }

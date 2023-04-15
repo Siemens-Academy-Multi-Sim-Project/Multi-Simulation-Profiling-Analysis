@@ -6,14 +6,11 @@ import java.util.HashMap;
 public class TableDataHolder extends BaseDataHolder {
     public ArrayList<HashMap<String, String>> table;
 
-    public TableDataHolder(){
+    public TableDataHolder(String name){
+        super(name);
         table = new ArrayList<>();
     }
     
-    @Override
-    public void init() {
-        table = new ArrayList<>();
-    }
 
     public void insertRow(String[] headers, String[] row){
         int maxSize = Math.max(headers.length, row.length); // in case some values were missing, they will be filled by emtpy String
@@ -25,12 +22,5 @@ public class TableDataHolder extends BaseDataHolder {
         }
         table.add(rowData);
     }
-
-    @Override
-    public void print() {
-        for(HashMap<String, String> row: table){
-            System.out.println(row);
-        }
-    }  
      
 }

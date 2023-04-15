@@ -1,8 +1,6 @@
 package com.example.multisimulationprofiling.utils.csv.properties;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,19 +26,16 @@ import com.example.multisimulationprofiling.utils.csv.exceptions.DelimiterExcept
  */
 
 
-public class SingleRowValueProperty extends CsvProperty<SingleRowValueDataHolder> {
+public class SingleRowCsvProperty extends CsvProperty<SingleRowValueDataHolder> {
 
-    public SingleRowValueProperty(String name, String ...delimiters) {
+    public SingleRowCsvProperty(String name, String ...delimiters) {
         super(name, delimiters);
-        dataHolder.key = name;
     }
 
 
 
     @Override
     public SingleRowValueDataHolder parseProperty(List<String> foundLines) throws IOException, DelimiterException {
-        
-        
         String line = foundLines.get(0);
         var lineDelimiter = findDelimiter(line);
         String[] splittedLine = line.split( Pattern.quote(lineDelimiter) );
@@ -70,8 +65,7 @@ public class SingleRowValueProperty extends CsvProperty<SingleRowValueDataHolder
 
     @Override
     public SingleRowValueDataHolder onCreateDataHolder() {
-        var holder = new SingleRowValueDataHolder();
-        holder.init();
+        var holder = new SingleRowValueDataHolder(this.propertyName);
         return holder;
     }
     

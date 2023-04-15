@@ -1,6 +1,10 @@
 package com.example.multisimulationprofiling.utils.csv.dataholders;
 
 public abstract class BaseDataHolder {
-    public abstract void init();
-    public abstract void print();
+    public String propertyName = "";
+
+    public BaseDataHolder(String propertyName) {
+        this.propertyName = propertyName;
+    }
+    
 }

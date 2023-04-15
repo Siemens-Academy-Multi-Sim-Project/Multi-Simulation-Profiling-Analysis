@@ -1,7 +1,6 @@
 package com.example.multisimulationprofiling.utils.csv.properties;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +14,11 @@ import com.example.multisimulationprofiling.utils.csv.exceptions.DelimiterExcept
  * To create a custom property parser, inherit a child class from this base class and override
  * {@code parseProperty} which is responsible for ectracting the desired properties and their values, 
  * and {@code findProperty} which is responsible for detecting the finding the lines where the desired property exist
- * 
+ * <p>Note: Only one delimiter can exist in one row at any time, and this functionality is purely meant for cases where the same row exists in multiple files but with different delimiter in each file</p>
+ *  
  * @param name The key of the property you want to extract
  * @param delimiters One or more delimiter that is expected to be found in that csv row
- * @param DATA_HOLDER_TYPE extends {@code BaseDataHolder} A class type to hold the parsed data and fits the structure of the parsed data
- * <p>Note: Only one delimiter can exist in one row at any time, and this functionality is purely meant for cases where the same row exists in multiple files but with different delimiter in each file</p>
+ * @param <DATA_HOLDER_TYPE> extends {@code BaseDataHolder} A class type to hold the parsed data and fits the structure of the parsed data
  */
 public abstract class CsvProperty <DATA_HOLDER_TYPE extends BaseDataHolder> {
     protected final String propertyName;
@@ -48,6 +47,10 @@ public abstract class CsvProperty <DATA_HOLDER_TYPE extends BaseDataHolder> {
         this.possibleDelimiters = delimitersArr;
     }
 
+    /**
+     * abstract initilization function to init the data holder
+     * @return the initilized dataholder 
+     */
     public abstract DATA_HOLDER_TYPE onCreateDataHolder();
 
     public DATA_HOLDER_TYPE getHolder(){ return dataHolder; }
@@ -55,9 +58,9 @@ public abstract class CsvProperty <DATA_HOLDER_TYPE extends BaseDataHolder> {
 
     /**
      * Main function that parses the row and returnes the associated dataholder
+     * @param foundLines a list of line that requires parsing
      * @throws IOException If reading the csv was unsuccessful in any way
      * @throws DelimiterException If zero or more than one delimiter was found in the same row
-     * @param csvFile A file object of the csv file itself
      */
     public abstract DATA_HOLDER_TYPE parseProperty(List<String> foundLines) throws DelimiterException, IOException;
 
