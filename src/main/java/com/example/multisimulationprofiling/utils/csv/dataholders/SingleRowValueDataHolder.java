@@ -9,5 +9,10 @@ public class SingleRowValueDataHolder extends BaseDataHolder {
         key = "";
         value = "";
     }
+
+    @Override
+    public void print() {
+        System.out.println(key + ": " + value);
+    }
     
 }

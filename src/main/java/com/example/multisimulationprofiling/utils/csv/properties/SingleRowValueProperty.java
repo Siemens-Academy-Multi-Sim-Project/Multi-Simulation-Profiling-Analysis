@@ -38,8 +38,7 @@ public class SingleRowValueProperty extends CsvProperty<SingleRowValueDataHolder
 
 
     @Override
-    public SingleRowValueDataHolder parseProperty(File csvFile) throws IOException, DelimiterException {
-        var foundLines = findProperty(csvFile);
+    public SingleRowValueDataHolder parseProperty(List<String> foundLines) throws IOException, DelimiterException {
         
         
         String line = foundLines.get(0);
@@ -48,27 +47,22 @@ public class SingleRowValueProperty extends CsvProperty<SingleRowValueDataHolder
         String[] trimmedLine = StringUtils.trim(splittedLine);
 
         dataHolder.value = trimmedLine[1];
+        setParsed(true);
         return dataHolder;
     }
 
     /**
-     * Loops over the file line by line and checks if the property is a substring of the current line, ignoring case
+     * checks if lines contains the property desired
      * @throws IOException If reading the csv was unsuccessful in any way
      * @return List of lines that contain the desired property
      */
     @Override
-    protected List<String> findProperty(File csvFile) throws IOException {
-        var reader = new BufferedReader(new FileReader(csvFile));
+    public List<String> findProperty(BufferedReader reader) throws IOException {
         var foundLines = new ArrayList<String>();
         String line = reader.readLine();
-        while (line != null) {
-            if(StringUtils.containsIgnoreCase(line, propertyName)){
-                foundLines.add(line);
-                break;
-            }
-            line = reader.readLine();
+        if (line != null && StringUtils.containsIgnoreCase(line, propertyName)) {
+            foundLines.add(line);
         }
-        reader.close();
         return foundLines;
     }
 

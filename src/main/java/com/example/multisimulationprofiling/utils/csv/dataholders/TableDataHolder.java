@@ -24,6 +24,13 @@ public class TableDataHolder extends BaseDataHolder {
             rowData.put(header, value);
         }
         table.add(rowData);
+    }
+
+    @Override
+    public void print() {
+        for(HashMap<String, String> row: table){
+            System.out.println(row);
+        }
     }  
      
 }

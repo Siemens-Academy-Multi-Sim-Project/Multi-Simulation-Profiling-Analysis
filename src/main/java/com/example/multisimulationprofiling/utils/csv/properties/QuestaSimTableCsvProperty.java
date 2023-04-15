@@ -33,8 +33,7 @@ public class QuestaSimTableCsvProperty extends CsvProperty<TableDataHolder> {
     }
 
     @Override
-    public TableDataHolder parseProperty(File csvFile) throws DelimiterException, IOException {
-        var foundLines = findProperty(csvFile);
+    public TableDataHolder parseProperty(List<String> foundLines) throws DelimiterException, IOException {
         var usedDelimiter = findDelimiter(foundLines.get(0));
         String headerLine = foundLines.get(0);
         String[] trimmedHeaders = StringUtils.splitAndTrim(headerLine, usedDelimiter);
@@ -43,33 +42,29 @@ public class QuestaSimTableCsvProperty extends CsvProperty<TableDataHolder> {
             String[] trimmedRow = StringUtils.splitAndTrim(rowLine, usedDelimiter);
             dataHolder.insertRow(trimmedHeaders, trimmedRow);
         }
+        setParsed(true);
         return dataHolder;
     }
 
     @Override
-    protected List<String> findProperty(File csvFile) throws IOException {
-        var reader = new BufferedReader(new FileReader(csvFile));
+    public List<String> findProperty(BufferedReader reader) throws IOException {
         var foundLines = new ArrayList<String>();
         String line = reader.readLine();
-        while (line != null) {
-            if(StringUtils.containsIgnoreCase(line, propertyName)){ // table found
-                reader.readLine(); //skip lower delimiter row
-                line = reader.readLine(); //read table header
+        if (line != null && StringUtils.containsIgnoreCase(line, propertyName)) {
+            reader.readLine(); //skip lower delimiter row
+            line = reader.readLine(); //read table header
+            foundLines.add(line);
+            line = reader.readLine();
+            if(line.contains("-----")) line = reader.readLine(); // skip header divider if detected
+            while(!line.isEmpty() 
+                && !line.contains("End")
+            ){
                 foundLines.add(line);
                 line = reader.readLine();
-                if(line.contains("-----")) line = reader.readLine(); // skip header divider if detected
-                while(!line.isEmpty() 
-                    && !line.contains("End")
-                ){
-                    foundLines.add(line);
-                    line = reader.readLine();
-                }
-                return foundLines;
             }
-            line = reader.readLine();
+                        
         }
-        reader.close();
-        return new ArrayList<>();
+        return foundLines;
     }
 
     @Override

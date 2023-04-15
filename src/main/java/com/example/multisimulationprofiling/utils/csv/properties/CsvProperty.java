@@ -1,5 +1,6 @@
 package com.example.multisimulationprofiling.utils.csv.properties;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +25,18 @@ public abstract class CsvProperty <DATA_HOLDER_TYPE extends BaseDataHolder> {
     protected final String propertyName;
     protected final List<String> possibleDelimiters;
     protected DATA_HOLDER_TYPE dataHolder;
+    private boolean isParsed = false;
 
+    public boolean isParsed() {
+        return isParsed;
+    }
+
+    public void setParsed(boolean isParsed) {
+        this.isParsed = isParsed;
+    }
+
+    public String getPropertyName(){ return this.propertyName; }
+    
     public CsvProperty(String name, String ...delimiters){
         this.propertyName = name;
         
@@ -38,16 +50,7 @@ public abstract class CsvProperty <DATA_HOLDER_TYPE extends BaseDataHolder> {
 
     public abstract DATA_HOLDER_TYPE onCreateDataHolder();
 
-    /**
-     * Main function that parses the row and returnes the associated dataholder
-     * @throws IOException If reading the csv was unsuccessful in any way
-     * @throws DelimiterException If zero or more than one delimiter was found in the same row
-     * @param csvFilePath A path pointing to the csv file
-     */
-    public DATA_HOLDER_TYPE parseProperty(String csvFilePath) throws DelimiterException, IOException{
-        File csvFile = new File(csvFilePath);
-        return parseProperty(csvFile);
-    }
+    public DATA_HOLDER_TYPE getHolder(){ return dataHolder; }
 
 
     /**
@@ -56,7 +59,7 @@ public abstract class CsvProperty <DATA_HOLDER_TYPE extends BaseDataHolder> {
      * @throws DelimiterException If zero or more than one delimiter was found in the same row
      * @param csvFile A file object of the csv file itself
      */
-    public abstract DATA_HOLDER_TYPE parseProperty(File csvFile) throws DelimiterException, IOException;
+    public abstract DATA_HOLDER_TYPE parseProperty(List<String> foundLines) throws DelimiterException, IOException;
 
 
     /**
@@ -65,7 +68,7 @@ public abstract class CsvProperty <DATA_HOLDER_TYPE extends BaseDataHolder> {
      * @return A list of the lines that fits the defined critera in the concrete impl
      * @throws IOException
      */
-    protected abstract List<String> findProperty(File csvFile) throws IOException;
+    public abstract List<String> findProperty(BufferedReader csvFile) throws IOException;
 
     /**
      * A helper function that finds the delimiter currently being used by the line. It also works as a guard in case a line had multiple or no delimiters
