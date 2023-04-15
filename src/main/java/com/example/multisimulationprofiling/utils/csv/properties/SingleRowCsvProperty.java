@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import com.example.multisimulationprofiling.utils.StringUtils;
-import com.example.multisimulationprofiling.utils.csv.dataholders.SingleRowValueDataHolder;
+import com.example.multisimulationprofiling.utils.csv.dataholders.SingleRowDataHolder;
 import com.example.multisimulationprofiling.utils.csv.exceptions.DelimiterException;
 
 /**
@@ -26,7 +26,7 @@ import com.example.multisimulationprofiling.utils.csv.exceptions.DelimiterExcept
  */
 
 
-public class SingleRowCsvProperty extends CsvProperty<SingleRowValueDataHolder> {
+public class SingleRowCsvProperty extends CsvProperty<SingleRowDataHolder> {
 
     public SingleRowCsvProperty(String name, String ...delimiters) {
         super(name, delimiters);
@@ -35,7 +35,7 @@ public class SingleRowCsvProperty extends CsvProperty<SingleRowValueDataHolder> 
 
 
     @Override
-    public SingleRowValueDataHolder parseProperty(List<String> foundLines) throws IOException, DelimiterException {
+    public SingleRowDataHolder parseProperty(List<String> foundLines) throws IOException, DelimiterException {
         String line = foundLines.get(0);
         var lineDelimiter = findDelimiter(line);
         String[] splittedLine = line.split( Pattern.quote(lineDelimiter) );
@@ -64,8 +64,8 @@ public class SingleRowCsvProperty extends CsvProperty<SingleRowValueDataHolder> 
 
 
     @Override
-    protected SingleRowValueDataHolder onCreateDataHolder() {
-        var holder = new SingleRowValueDataHolder(this.propertyName);
+    protected SingleRowDataHolder onCreateDataHolder() {
+        var holder = new SingleRowDataHolder(this.propertyName);
         return holder;
     }
     
