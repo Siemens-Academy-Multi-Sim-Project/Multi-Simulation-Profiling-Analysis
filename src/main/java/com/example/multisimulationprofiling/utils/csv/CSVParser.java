@@ -8,7 +8,6 @@ import java.util.List;
 
 import com.example.multisimulationprofiling.utils.csv.dataholders.BaseDataHolder;
 import com.example.multisimulationprofiling.utils.csv.dataholders.SingleRowDataHolder;
-import com.example.multisimulationprofiling.utils.csv.dataholders.SingleRowValueDataHolder;
 import com.example.multisimulationprofiling.utils.csv.dataholders.TableDataHolder;
 import com.example.multisimulationprofiling.utils.csv.exceptions.DelimiterException;
 import com.example.multisimulationprofiling.utils.csv.properties.CsvProperty;
@@ -84,10 +83,10 @@ public class CSVParser {
 
     public static void main(String[] args) throws DelimiterException, IOException {
         CSVParser parser = new CSVParser(
-            new SingleRowCsvProperty("Vsim Time", ","),
-            new SingleRowCsvProperty("Vopt Time", ","),
-            new SingleRowCsvProperty("Vopt Memory", ","),
-            new SingleRowCsvProperty("Vsim Memory", ","),
+            new SingleRowCsvProperty("Vsim Time", "|"),
+            new SingleRowCsvProperty("Vopt Time", "|"),
+            new SingleRowCsvProperty("Vopt Memory", "|"),
+            new SingleRowCsvProperty("Vsim Memory", "|"),
             new QuestaSimTableCsvProperty("'/Design Unit (Vsim Performance Profiler)' Report", "|")
         );
 
