@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -33,7 +32,7 @@ public class SingleRowValueProperty extends CsvProperty<SingleRowValueDataHolder
 
     public SingleRowValueProperty(String name, String ...delimiters) {
         super(name, delimiters);
-        data.key = name;
+        dataHolder.key = name;
     }
 
 
@@ -48,8 +47,8 @@ public class SingleRowValueProperty extends CsvProperty<SingleRowValueDataHolder
         String[] splittedLine = line.split( Pattern.quote(lineDelimiter) );
         String[] trimmedLine = StringUtils.trim(splittedLine);
 
-        data.value = trimmedLine[1];
-        return data;
+        dataHolder.value = trimmedLine[1];
+        return dataHolder;
     }
 
     /**
@@ -71,6 +70,15 @@ public class SingleRowValueProperty extends CsvProperty<SingleRowValueDataHolder
         }
         reader.close();
         return foundLines;
+    }
+
+
+
+    @Override
+    public SingleRowValueDataHolder onCreateDataHolder() {
+        var holder = new SingleRowValueDataHolder();
+        holder.init();
+        return holder;
     }
     
 }

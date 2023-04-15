@@ -28,17 +28,22 @@ import com.example.multisimulationprofiling.utils.csv.exceptions.DelimiterExcept
  */
 public class QuestaSimTableCsvProperty extends CsvProperty<TableDataHolder> {
 
-    public QuestaSimTableCsvProperty(String name, String[] delimiters) {
+    public QuestaSimTableCsvProperty(String name, String... delimiters) {
         super(name, delimiters);
     }
 
     @Override
     public TableDataHolder parseProperty(File csvFile) throws DelimiterException, IOException {
         var foundLines = findProperty(csvFile);
-        
-        for(String line: foundLines){
-            
+        var usedDelimiter = findDelimiter(foundLines.get(0));
+        String headerLine = foundLines.get(0);
+        String[] trimmedHeaders = StringUtils.splitAndTrim(headerLine, usedDelimiter);
+        for(int i = 1; i < foundLines.size(); i++){
+            String rowLine = foundLines.get(i);
+            String[] trimmedRow = StringUtils.splitAndTrim(rowLine, usedDelimiter);
+            dataHolder.insertRow(trimmedHeaders, trimmedRow);
         }
+        return dataHolder;
     }
 
     @Override
@@ -51,8 +56,11 @@ public class QuestaSimTableCsvProperty extends CsvProperty<TableDataHolder> {
                 reader.readLine(); //skip lower delimiter row
                 line = reader.readLine(); //read table header
                 foundLines.add(line);
-                line = reader.readLine(); //read first data row
-                while(!line.isEmpty() || StringUtils.containsIgnoreCase(line, "End")){
+                line = reader.readLine();
+                if(line.contains("-----")) line = reader.readLine(); // skip header divider if detected
+                while(!line.isEmpty() 
+                    && !line.contains("End")
+                ){
                     foundLines.add(line);
                     line = reader.readLine();
                 }
@@ -62,6 +70,11 @@ public class QuestaSimTableCsvProperty extends CsvProperty<TableDataHolder> {
         }
         reader.close();
         return new ArrayList<>();
+    }
+
+    @Override
+    public TableDataHolder onCreateDataHolder() {
+        return new TableDataHolder();
     }
 
 }

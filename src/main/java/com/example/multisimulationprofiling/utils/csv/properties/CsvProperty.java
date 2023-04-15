@@ -3,7 +3,6 @@ package com.example.multisimulationprofiling.utils.csv.properties;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.example.multisimulationprofiling.utils.csv.dataholders.BaseDataHolder;
@@ -24,7 +23,7 @@ import com.example.multisimulationprofiling.utils.csv.exceptions.DelimiterExcept
 public abstract class CsvProperty <DATA_HOLDER_TYPE extends BaseDataHolder> {
     protected final String propertyName;
     protected final List<String> possibleDelimiters;
-    protected DATA_HOLDER_TYPE data;
+    protected DATA_HOLDER_TYPE dataHolder;
 
     public CsvProperty(String name, String ...delimiters){
         this.propertyName = name;
@@ -33,9 +32,11 @@ public abstract class CsvProperty <DATA_HOLDER_TYPE extends BaseDataHolder> {
         for(String delimiter: delimiters){
             delimitersArr.add(delimiter);
         }
-        data.init();
+        dataHolder = onCreateDataHolder();
         this.possibleDelimiters = delimitersArr;
     }
+
+    public abstract DATA_HOLDER_TYPE onCreateDataHolder();
 
     /**
      * Main function that parses the row and returnes the associated dataholder
