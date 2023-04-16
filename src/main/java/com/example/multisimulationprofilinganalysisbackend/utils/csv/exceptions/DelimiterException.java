@@ -1,4 +1,4 @@
-package com.example.multisimulationprofiling.utils.csv.exceptions;
+package com.example.multisimulationprofilinganalysisbackend.utils.csv.exceptions;
 
 public class DelimiterException extends Exception{
     public DelimiterException(String msg){

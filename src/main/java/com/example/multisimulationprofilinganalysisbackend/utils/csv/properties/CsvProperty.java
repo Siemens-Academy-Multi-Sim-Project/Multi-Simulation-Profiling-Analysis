@@ -1,12 +1,12 @@
-package com.example.multisimulationprofiling.utils.csv.properties;
+package com.example.multisimulationprofilinganalysisbackend.utils.csv.properties;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.multisimulationprofiling.utils.csv.dataholders.BaseDataHolder;
-import com.example.multisimulationprofiling.utils.csv.exceptions.DelimiterException;
+import com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders.BaseDataHolder;
+import com.example.multisimulationprofilinganalysisbackend.utils.csv.exceptions.DelimiterException;
 
 /**
  * The base class which all {@code CSVParser} properties inherits from

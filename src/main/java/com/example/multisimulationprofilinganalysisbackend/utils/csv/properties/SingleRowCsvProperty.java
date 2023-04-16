@@ -1,4 +1,4 @@
-package com.example.multisimulationprofiling.utils.csv.properties;
+package com.example.multisimulationprofilinganalysisbackend.utils.csv.properties;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import com.example.multisimulationprofiling.utils.StringUtils;
-import com.example.multisimulationprofiling.utils.csv.dataholders.SingleRowDataHolder;
-import com.example.multisimulationprofiling.utils.csv.exceptions.DelimiterException;
+import com.example.multisimulationprofilinganalysisbackend.utils.StringUtils;
+import com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders.SingleRowDataHolder;
+import com.example.multisimulationprofilinganalysisbackend.utils.csv.exceptions.DelimiterException;
 
 /**
  * The {@code SingleRowValueProperty} class is responsible for extracting single key value pairs from a CSV row with a specified delimiter.<br>

@@ -1,4 +1,4 @@
-package com.example.multisimulationprofiling.utils.csv.dataholders;
+package com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders;
 
 import java.util.ArrayList;
 import java.util.HashMap;

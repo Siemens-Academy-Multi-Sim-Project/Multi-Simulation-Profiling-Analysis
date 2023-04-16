@@ -1,4 +1,4 @@
-package com.example.multisimulationprofiling.utils.csv;
+package com.example.multisimulationprofilinganalysisbackend.utils.csv;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -6,13 +6,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import com.example.multisimulationprofiling.utils.csv.dataholders.BaseDataHolder;
-import com.example.multisimulationprofiling.utils.csv.dataholders.SingleRowDataHolder;
-import com.example.multisimulationprofiling.utils.csv.dataholders.TableDataHolder;
-import com.example.multisimulationprofiling.utils.csv.exceptions.DelimiterException;
-import com.example.multisimulationprofiling.utils.csv.properties.CsvProperty;
-import com.example.multisimulationprofiling.utils.csv.properties.QuestaSimTableCsvProperty;
-import com.example.multisimulationprofiling.utils.csv.properties.SingleRowCsvProperty;
+import com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders.BaseDataHolder;
+import com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders.SingleRowDataHolder;
+import com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders.TableDataHolder;
+import com.example.multisimulationprofilinganalysisbackend.utils.csv.exceptions.DelimiterException;
+import com.example.multisimulationprofilinganalysisbackend.utils.csv.properties.CsvProperty;
+import com.example.multisimulationprofilinganalysisbackend.utils.csv.properties.QuestaSimTableCsvProperty;
+import com.example.multisimulationprofilinganalysisbackend.utils.csv.properties.SingleRowCsvProperty;
 
 /**
  * CSV driver class, this class is responsive for taking user defined properties

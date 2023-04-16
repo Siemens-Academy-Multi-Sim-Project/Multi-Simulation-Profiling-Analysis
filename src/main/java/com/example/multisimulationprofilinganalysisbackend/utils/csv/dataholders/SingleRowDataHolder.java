@@ -1,4 +1,4 @@
-package com.example.multisimulationprofiling.utils.csv.dataholders;
+package com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders;
 
 public class SingleRowDataHolder extends BaseDataHolder {
     public String value;    

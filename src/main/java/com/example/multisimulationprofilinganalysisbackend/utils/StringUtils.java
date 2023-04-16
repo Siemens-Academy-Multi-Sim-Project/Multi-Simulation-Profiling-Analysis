@@ -1,4 +1,4 @@
-package com.example.multisimulationprofiling.utils;
+package com.example.multisimulationprofilinganalysisbackend.utils;
 
 import java.util.regex.Pattern;
 
