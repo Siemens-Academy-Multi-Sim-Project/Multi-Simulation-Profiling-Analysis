@@ -22,5 +22,11 @@ public class TableDataHolder extends BaseDataHolder {
         }
         table.add(rowData);
     }
+
+
+    @Override
+    public void reset() {
+        table.clear();
+    }
      
 }
