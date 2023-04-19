@@ -84,13 +84,18 @@ public abstract class CsvProperty <DATA_HOLDER_TYPE extends BaseDataHolder> {
         for(String delimiter: possibleDelimiters){
             if(line.contains(delimiter)){
                 if(foundDelimiter != null){
-                    throw new DelimiterException("Multiple delimiters found in: " + line);
+                    throw new DelimiterException("Multiple delimiters found for: " + propertyName + "\nin " + line);
                 }
                 foundDelimiter = delimiter;
             }
         }
-        if(foundDelimiter == null) throw new DelimiterException("No delimiters found in: " + line);
+        if(foundDelimiter == null) throw new DelimiterException("No delimiters found for: " + propertyName + "\nin " + line);
 
         return foundDelimiter;
+    }
+
+    public void reset(){
+        setParsed(false);
+        dataHolder.reset();
     }
 }

@@ -46,6 +46,7 @@ public class CSVParser {
      */
     public HashMap<String, BaseDataHolder> parseFile(String filePath) throws DelimiterException, IOException {
         parsedProperties.clear();
+        resetProperties();
         try (BufferedReader fileReader = new BufferedReader(new FileReader(filePath))) {
             for (String line = fileReader.readLine(); line != null; line = fileReader.readLine()) {
                 for (CsvProperty<BaseDataHolder> property : properties.values()) {
@@ -72,6 +73,12 @@ public class CSVParser {
         return this.parsedProperties;
     }
 
+    private void resetProperties() {
+        for(CsvProperty property: properties.values()){
+            property.reset();
+        }
+    }
+
     /**
      * @param propertyName  property name of the data holder you want to get
      * @param <DATA_HOLDER> Type of dataholder related to the property provided
@@ -82,22 +89,37 @@ public class CSVParser {
     }
 
     public static void main(String[] args) throws DelimiterException, IOException {
+        String VSIM_TIME = "Vsim Time";
+        String VOPT_TIME = "Vopt Time";
+        String VOPT_MEMORY = "Vopt Memory";
+        String VSIM_MEMORY = "Vsim Memory";
         CSVParser parser = new CSVParser(
-            new SingleRowCsvProperty("Vsim Time", "|"),
-            new SingleRowCsvProperty("Vopt Time", "|"),
-            new SingleRowCsvProperty("Vopt Memory", "|"),
-            new SingleRowCsvProperty("Vsim Memory", "|"),
-            new QuestaSimTableCsvProperty("'/Design Unit (Vsim Performance Profiler)' Report", "|")
+            new SingleRowCsvProperty(VSIM_TIME, "|", ","),
+            new SingleRowCsvProperty(VOPT_TIME, "|", ","),
+            new SingleRowCsvProperty(VOPT_MEMORY, "|", ","),
+            new SingleRowCsvProperty(VSIM_MEMORY, "|", ",")
         );
 
-        parser.parseFile("ethmac_554.csv");
-        SingleRowDataHolder vsimTime = parser.getHolder("Vsim Time");
-        System.out.println("Vsim Time: " + vsimTime.value);
+        String[] files = {
+            "ethmac_3997.csv",
+            "Silabs_design_usage_profiler_data.csv"
+        };
 
-        SingleRowDataHolder voptTime = parser.getHolder("Vopt Time");
-        System.out.println("Vopt Time: " + voptTime.value);
+        for(String file: files){
+            System.out.println(file);
+            parser.parseFile(file);
+            SingleRowDataHolder vsimTime = parser.getHolder(VSIM_TIME);
+            System.out.println(vsimTime.propertyName + ": " + vsimTime.value);
 
-        TableDataHolder designUnits = parser.getHolder("'/Design Unit (Vsim Performance Profiler)' Report");
-        System.out.println(designUnits.table);
+            SingleRowDataHolder voptTime = parser.getHolder(VOPT_TIME);
+            System.out.println(voptTime.propertyName + ": " + voptTime.value);
+            
+            SingleRowDataHolder vsimMemory = parser.getHolder(VSIM_MEMORY);
+            System.out.println(vsimMemory.propertyName + ": " + vsimMemory.value);
+            
+            SingleRowDataHolder voptMemory = parser.getHolder(VOPT_MEMORY);
+            System.out.println(voptMemory.propertyName + ": " + voptMemory.value);
+            System.out.println("---------------------------------------------");
+        }
     }
 }

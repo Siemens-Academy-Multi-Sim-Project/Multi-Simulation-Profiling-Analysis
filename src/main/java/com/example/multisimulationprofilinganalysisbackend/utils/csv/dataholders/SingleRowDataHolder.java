@@ -8,4 +8,9 @@ public class SingleRowDataHolder extends BaseDataHolder {
         value = "";
     }
 
+    @Override
+    public void reset() {
+        value = "";
+    }
+
 }

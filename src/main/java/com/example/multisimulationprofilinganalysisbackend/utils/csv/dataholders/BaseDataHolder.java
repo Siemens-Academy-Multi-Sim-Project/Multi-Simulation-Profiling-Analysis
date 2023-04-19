@@ -6,5 +6,7 @@ public abstract class BaseDataHolder {
     public BaseDataHolder(String propertyName) {
         this.propertyName = propertyName;
     }
+
+    public abstract void reset();
     
 }
