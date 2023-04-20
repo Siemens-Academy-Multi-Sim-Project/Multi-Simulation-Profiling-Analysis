@@ -9,8 +9,6 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 
-//@Getter
-//@Setter
 @EqualsAndHashCode
 //@NoArgsConstructor
 @Entity
