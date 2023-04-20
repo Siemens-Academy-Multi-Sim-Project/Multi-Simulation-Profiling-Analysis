@@ -21,6 +21,7 @@ public class RegistrationRequest {
 
 
     }
+
     public String  getEmail() {
         return email;
     }
@@ -37,15 +38,5 @@ public class RegistrationRequest {
         return password;
     }
 
-  /*  public String  getConfirmedAt() {
-        return "2023";
-    }
-
-    public String  getExpiresAt() {
-        return "2030";
-    }
-    public String  getAppUser() {
-        return "App user";
-    }*/
 
 }
