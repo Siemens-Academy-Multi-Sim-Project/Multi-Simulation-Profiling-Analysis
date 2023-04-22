@@ -2,8 +2,10 @@ FROM eclipse-temurin:17
 
 WORKDIR /app
 
-COPY target/Multi-Simulation-Profiling-0.0.1-SNAPSHOT.war /app/app.war
+COPY . .
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "app.war"]
+CMD ["./gradlew clean build"]
+
+ENTRYPOINT ["java", "-jar", "app.war"]
