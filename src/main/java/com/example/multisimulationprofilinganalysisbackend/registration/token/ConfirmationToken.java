@@ -66,4 +66,6 @@ public class ConfirmationToken {
     public AppUser  getAppUser() {
         return appUser;
     }
+
+    public String getToken(){ return this.token; }
 }

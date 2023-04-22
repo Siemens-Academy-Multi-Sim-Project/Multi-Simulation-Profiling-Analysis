@@ -18,8 +18,10 @@ public class RegistrationRequest {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+    }
 
-
+    public RegistrationRequest(){
+        this("","","","");
     }
 
     public String  getEmail() {
