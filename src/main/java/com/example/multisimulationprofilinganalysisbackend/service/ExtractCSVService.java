@@ -78,75 +78,24 @@ public class ExtractCSVService {
         System.out.println(FileDstination);
         parser.parseFile(FileDstination);
         SingleRowDataHolder vsimTime = parser.getHolder(VSIM_TIME);
-        System.out.println(vsimTime.propertyName + ": " + vsimTime.value);
-
         SingleRowDataHolder voptTime = parser.getHolder(VOPT_TIME);
-        System.out.println(voptTime.propertyName + ": " + voptTime.value);
-
         SingleRowDataHolder vsimMemory = parser.getHolder(VSIM_MEMORY);
-        System.out.println(vsimMemory.propertyName + ": " + vsimMemory.value);
-
         SingleRowDataHolder voptMemory = parser.getHolder(VOPT_MEMORY);
-        System.out.println(voptMemory.propertyName + ": " + voptMemory.value);
-        System.out.println("---------------------------------------------");
-
         SingleRowDataHolder voptCommand=parser.getHolder(VOPT_COMMAND_LINE);
-        System.out.println(voptCommand.propertyName + ": " + voptCommand.value);
-        System.out.println("---------------------------------------------");
-
         SingleRowDataHolder vsimCommand=parser.getHolder(VSIM_COMMAND_LINE);
-        System.out.println(vsimCommand.propertyName + ": " + vsimCommand.value);
-        System.out.println("---------------------------------------------");
-
         SingleRowDataHolder methodology=parser.getHolder(METHODOLOGY);
-        System.out.println(methodology.propertyName + ": " + methodology.value);
-        System.out.println("---------------------------------------------");
-
         SingleRowDataHolder designType=parser.getHolder(DESIGN_TYPE);
-        System.out.println(designType.propertyName + ": " + designType.value);
-        System.out.println("---------------------------------------------");
-
         SingleRowDataHolder designComposition=parser.getHolder(DESIGN_COMPOSITION);
-        System.out.println(designComposition.propertyName + ": " + designComposition.value);
-        System.out.println("---------------------------------------------");
-
         SingleRowDataHolder toolVersion=parser.getHolder(TOOL_VERSION);
-        System.out.println(toolVersion.propertyName + ": " + toolVersion.value);
-        System.out.println("---------------------------------------------");
-
         SingleRowDataHolder platform=parser.getHolder(PLATFORM);
-        System.out.println(platform.propertyName + ": " + platform.value);
-        System.out.println("---------------------------------------------");
-
         SingleRowDataHolder dateOfCollection=parser.getHolder(DATE_OF_COLLECTION);
-        System.out.println(dateOfCollection.propertyName + ": " + dateOfCollection.value);
-        System.out.println("---------------------------------------------");
-
         SingleRowDataHolder totalWallTime=parser.getHolder(TOTAL_WALL_TIME);
-        System.out.println(totalWallTime.propertyName + ": " + totalWallTime.value);
-        System.out.println("---------------------------------------------");
-
         SingleRowDataHolder solverWallTime=parser.getHolder(SOLVER_WALL_TIME);
-        System.out.println(solverWallTime.propertyName + ": " + solverWallTime.value);
-        System.out.println("---------------------------------------------");
-
         SingleRowDataHolder solvermem=parser.getHolder(SOLVER_MEMORY);
-        System.out.println(solvermem.propertyName + ": " + solvermem.value);
-        System.out.println("---------------------------------------------");
-
         SingleRowDataHolder randomizecall=parser.getHolder(RANDOMIZE_CALLS);
-        System.out.println(randomizecall.propertyName + ": " + randomizecall.value);
-        System.out.println("---------------------------------------------");
 
 
-       // System.out.println(DESIGN_UNIT );
-       // System.out.println("---------------------------------------------");
+
     }
-    private void saveFile(MultipartFile file) throws Exception {
-        try {
-            Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
-        } catch (Exception e) {
-            throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
-        }
-    }
+
 }
