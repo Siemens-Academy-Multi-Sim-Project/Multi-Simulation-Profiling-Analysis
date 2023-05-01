@@ -25,4 +25,10 @@ public class ProfilingDataController {
         return ResponseEntity.ok(profilingData);
     }
 
+    @GetMapping("profiling-data/getDesignsNumber")
+    public ResponseEntity<String> getProfilingDataDesignNumber() {
+        String res = profilingDataRepository.getDesignsNumber();
+        return ResponseEntity.ok(res);
+    }
+
 }

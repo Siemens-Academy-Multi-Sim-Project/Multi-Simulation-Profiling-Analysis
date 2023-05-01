@@ -11,4 +11,7 @@ import java.util.List;
 
 @Repository
 public interface ProfilingDataRepository extends JpaRepository<ProfilingData, Long> {
+    @Query(value = "SELECT COUNT(*) FROM (SELECT design_Composition_Name, design_Composition_Modules,design_Composition_Packages,design_Composition_Interfaces,design_Composition_Instances FROM Profiling_Data GROUP BY design_Composition_Name, design_Composition_Modules,design_Composition_Packages,design_Composition_Interfaces,design_Composition_Instances HAVING COUNT(*) > 0) AS sub", nativeQuery = true)
+
+    String getDesignsNumber();
 }
