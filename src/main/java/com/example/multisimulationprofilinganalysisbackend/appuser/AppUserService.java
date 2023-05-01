@@ -60,7 +60,6 @@ public class AppUserService implements UserDetailsService {
                     return optionalToken.get().getToken();
                 }
             }
-
             throw new IllegalStateException("email already taken");
         }
 
