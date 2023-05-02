@@ -105,7 +105,7 @@ public class CSVParser {
         String SOLVER_MEMORY = "Solver Memory";
         String RANDOMIZE_CALLS = "Randomize Calls";
 
-        String DESIGN_UNIT = "Design Unit";
+        String DESIGN_UNIT = "'/Design Unit (Vsim Performance Profiler)' Report";
         CSVParser parser = new CSVParser(
             new SingleRowCsvProperty(VSIM_TIME, "|", ","),
             new SingleRowCsvProperty(VOPT_TIME, "|", ","),
@@ -193,9 +193,11 @@ public class CSVParser {
             System.out.println(randomizecall.propertyName + ": " + randomizecall.value);
             System.out.println("---------------------------------------------");
 
-            System.out.println(DESIGN_UNIT);
+            TableDataHolder du = parser.getHolder(DESIGN_UNIT);
+            System.out.println(du);
             System.out.println("---------------------------------------------");
 
         }
+
     }
 }
