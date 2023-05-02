@@ -28,5 +28,14 @@ public class TableDataHolder extends BaseDataHolder {
     public void reset() {
         table.clear();
     }
+
+    @Override
+    public String toString() {
+        String allRows = "";
+        for(var row: this.table){
+            allRows += row.toString();
+        }
+        return this.propertyName + "\n" + allRows;
+    }
      
 }

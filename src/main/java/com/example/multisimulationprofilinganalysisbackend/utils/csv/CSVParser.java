@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders.BaseDataHolder;
 import com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders.SingleRowDataHolder;
@@ -49,21 +50,20 @@ public class CSVParser {
         resetProperties();
         try (BufferedReader fileReader = new BufferedReader(new FileReader(filePath))) {
             for (String line = fileReader.readLine(); line != null; line = fileReader.readLine()) {
+                fileReader.mark(BUFFERED_REDER_READ_LIMIT); // mark where the property will start searching in the
                 for (CsvProperty<BaseDataHolder> property : properties.values()) {
                     if (property.isParsed()) {
                         continue;
                     }
 
-                    fileReader.mark(BUFFERED_REDER_READ_LIMIT); // mark where the property will start searching in the
                                                                 // file
                     List<String> foundLines = property.findProperty(fileReader); // pass fileReader to property to start
                                                                                  // the search
-                    if (foundLines.isEmpty()) { // property wasn't found, so reset to original position
-                        fileReader.reset();
-                    } else {
+                    if (!foundLines.isEmpty()) { // property wasn't found, so reset to original position
                         var parsedProperty = property.parseProperty(foundLines);
                         this.parsedProperties.put(property.getPropertyName(), parsedProperty);
                     }
+                    fileReader.reset();
                 }
             }
 
@@ -133,7 +133,6 @@ public class CSVParser {
         };
 
         for(String file: files){
-            System.out.println(file);
             parser.parseFile(file);
 
             SingleRowDataHolder vsimTime = parser.getHolder(VSIM_TIME);
@@ -199,7 +198,7 @@ public class CSVParser {
 
             System.out.println(DESIGN_UNIT);
             System.out.println("---------------------------------------------");
-
+            
 
         }
     }
