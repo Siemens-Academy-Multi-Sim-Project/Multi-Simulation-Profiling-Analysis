@@ -50,16 +50,15 @@ public class CSVParser {
         resetProperties();
         try (BufferedReader fileReader = new BufferedReader(new FileReader(filePath))) {
             for (String line = fileReader.readLine(); line != null; line = fileReader.readLine()) {
-                fileReader.mark(BUFFERED_REDER_READ_LIMIT); // mark where the property will start searching in the
+                fileReader.mark(BUFFERED_REDER_READ_LIMIT); // mark where the property will start searching in the file
                 for (CsvProperty<BaseDataHolder> property : properties.values()) {
                     if (property.isParsed()) {
                         continue;
                     }
 
-                    // file
                     List<String> foundLines = property.findProperty(fileReader); // pass fileReader to property to start
                                                                                  // the search
-                    if (!foundLines.isEmpty()) { // property wasn't found, so reset to original position
+                    if (!foundLines.isEmpty()) {
                         var parsedProperty = property.parseProperty(foundLines);
                         this.parsedProperties.put(property.getPropertyName(), parsedProperty);
                     }
