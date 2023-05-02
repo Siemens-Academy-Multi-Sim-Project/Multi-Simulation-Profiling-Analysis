@@ -74,24 +74,21 @@ public abstract class CsvProperty <DATA_HOLDER_TYPE extends BaseDataHolder> {
     public abstract List<String> findProperty(BufferedReader csvFile) throws IOException;
 
     /**
-     * A helper function that finds the delimiter currently being used by the line. It also works as a guard in case a line had multiple or no delimiters
+     * A helper function that finds the delimiter currently being used by the line. 
+     * It returnes the first delimiter found, if there are multiple delimiters, only the first
+     * recognized one is returned
+     * delimiters are recognized by the order they are provided in the constructor
      * @param line The line to check and find the delimtier of
      * @throws DelimiterException If zero or more than one delimiter was found
      * @return The delimiter being used
      */
     protected String findDelimiter(String line) throws DelimiterException{
-        String foundDelimiter = null;
         for(String delimiter: possibleDelimiters){
             if(line.contains(delimiter)){
-                if(foundDelimiter != null){
-                    throw new DelimiterException("Multiple delimiters found for: " + propertyName + "\nin " + line);
-                }
-                foundDelimiter = delimiter;
+                return delimiter;
             }
         }
-        if(foundDelimiter == null) throw new DelimiterException("No delimiters found for: " + propertyName + "\nin " + line);
-
-        return foundDelimiter;
+        throw new DelimiterException("No delimiters found for: " + propertyName + "\nin " + line);
     }
 
     public void reset(){
