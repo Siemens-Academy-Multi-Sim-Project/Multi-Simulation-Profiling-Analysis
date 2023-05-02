@@ -124,8 +124,8 @@ public class CSVParser {
                 new SingleRowCsvProperty(TOTAL_WALL_TIME, "|", ","),
                 new SingleRowCsvProperty(SOLVER_WALL_TIME, "|", ","),
                 new SingleRowCsvProperty(SOLVER_MEMORY, "|", ","),
-                new SingleRowCsvProperty(RANDOMIZE_CALLS, "|", ",")
-                ,new QuestaSimTableCsvProperty(DESIGN_UNIT,"|", ",")
+                new SingleRowCsvProperty(RANDOMIZE_CALLS, "|", ","),
+                new QuestaSimTableCsvProperty(DESIGN_UNIT,"|", ",")
         );
 
         String[] files = {
