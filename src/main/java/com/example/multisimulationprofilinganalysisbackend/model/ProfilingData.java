@@ -19,6 +19,12 @@ public class ProfilingData {
     @NotNull
     private String methodology;
 
+
+
+    @Column(name = "FileName",length = 10000)
+    @NotNull
+    private String FileName;
+
     @Column(name = "DesignType")
     @NotNull
     private String designType;
@@ -61,7 +67,7 @@ public class ProfilingData {
     @NotNull
     private String voptMemory;
 
-    @Column(name = "VoptCMDCommand")
+    @Column(name = "VoptCMDCommand",length=10000)
     @NotNull
     private String voptCMDCommand;
 
@@ -75,7 +81,7 @@ public class ProfilingData {
     @NotNull
     private String vsimMemory;
 
-    @Column(name = "VsimCMDCommand")
+    @Column(name = "VsimCMDCommand",length=10000)
     @NotNull
     private String vsimCMDCommand;
 
@@ -267,6 +273,13 @@ public class ProfilingData {
 
     public void setDesignCompositionInstances(String designCompositionInstances) {
         this.designCompositionInstances = designCompositionInstances;
+    }
+    public String getFileName() {
+        return FileName;
+    }
+
+    public void setFileName(String fileName) {
+        FileName = fileName;
     }
 
     public List<DesignUnit> getDesignUnits() {
