@@ -1,34 +1,27 @@
 package com.example.multisimulationprofilinganalysisbackend.service;
 
-import com.example.multisimulationprofilinganalysisbackend.appuser.AppUserRepository;
-import com.example.multisimulationprofilinganalysisbackend.dto.ProfilingDataDto;
+import com.example.multisimulationprofilinganalysisbackend.dao.DesignUnitRepository;
+import com.example.multisimulationprofilinganalysisbackend.dao.ProfilingDataRepository;
+import com.example.multisimulationprofilinganalysisbackend.model.DesignUnit;
+import com.example.multisimulationprofilinganalysisbackend.model.ProfilingData;
 import com.example.multisimulationprofilinganalysisbackend.utils.csv.CSVParser;
 import com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders.SingleRowDataHolder;
 import com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders.TableDataHolder;
-import com.example.multisimulationprofilinganalysisbackend.utils.csv.exceptions.DelimiterException;
 import com.example.multisimulationprofilinganalysisbackend.utils.csv.properties.QuestaSimTableCsvProperty;
 import com.example.multisimulationprofilinganalysisbackend.utils.csv.properties.SingleRowCsvProperty;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 @Service
 public class ExtractCSVService {
-   // private final ProfilingDataDto profilingdataDto;
-//    public ExtractCSVService(ProfilingDataDto profilingdataDto){
-//        this.profilingdataDto=profilingdataDto;
-//    }
-   private final Path root = Paths.get("uploads");
 
+    private final ProfilingDataRepository profilingDataRepository;
+    private final DesignUnitRepository designUnitRepository;
 
-    public ExtractCSVService(){}
-
+    public ExtractCSVService(ProfilingDataRepository profilingDataRepository, DesignUnitRepository designUnitRepository){
+        this.profilingDataRepository = profilingDataRepository;
+        this.designUnitRepository = designUnitRepository;
+    }
 
 
     public void extractfile( MultipartFile file ,String filePath) throws Exception {
@@ -49,6 +42,11 @@ public class ExtractCSVService {
         String SOLVER_MEMORY = "Solver Memory";
         String RANDOMIZE_CALLS = "Randomize Calls";
 
+        String DC_MODULES = "    Modules";
+        String DC_PACKAGES = "    Packages";
+        String DC_INTERFACES= "    Interfaces";
+        String DC_INSTANCES = "    Module Instances";
+
         String DESIGN_UNIT = "'/Design Unit (Vsim Performance Profiler)' Report";
 
         CSVParser parser = new CSVParser(
@@ -68,12 +66,18 @@ public class ExtractCSVService {
                 new SingleRowCsvProperty(SOLVER_WALL_TIME, "|", ","),
                 new SingleRowCsvProperty(SOLVER_MEMORY, "|", ","),
                 new SingleRowCsvProperty(RANDOMIZE_CALLS, "|", ","),
+
+
+                new SingleRowCsvProperty(DC_MODULES, "|", ","),
+                new SingleRowCsvProperty(DC_PACKAGES, "|", ","),
+                new SingleRowCsvProperty(DC_INTERFACES, "|", ","),
+                new SingleRowCsvProperty(DC_INSTANCES, "|", ","),
+
                 new QuestaSimTableCsvProperty(DESIGN_UNIT, "|", ","));
 
         String FileDstination = filePath;
 
 
-        System.out.println(FileDstination);
         parser.parseFile(FileDstination);
         SingleRowDataHolder vsimTime = parser.getHolder(VSIM_TIME);
         SingleRowDataHolder voptTime = parser.getHolder(VOPT_TIME);
@@ -91,10 +95,46 @@ public class ExtractCSVService {
         SingleRowDataHolder solverWallTime=parser.getHolder(SOLVER_WALL_TIME);
         SingleRowDataHolder solvermem=parser.getHolder(SOLVER_MEMORY);
         SingleRowDataHolder randomizecall=parser.getHolder(RANDOMIZE_CALLS);
-        TableDataHolder designUnit = parser.getHolder(DESIGN_UNIT);
+        SingleRowDataHolder DC_modules=parser.getHolder(RANDOMIZE_CALLS);
+        SingleRowDataHolder DC_Packages=parser.getHolder(RANDOMIZE_CALLS);
+        SingleRowDataHolder DC_interface=parser.getHolder(RANDOMIZE_CALLS);
+        SingleRowDataHolder DC_inectance=parser.getHolder(RANDOMIZE_CALLS);
 
 
+        ProfilingData profilingData=new ProfilingData();
+        profilingData.setVsimTime(String.valueOf(vsimTime.value));
+        profilingData.setVoptTime(String.valueOf(voptTime.value));
+        profilingData.setVoptMemory(String.valueOf(voptMemory.value));
+        profilingData.setVsimMemory(String.valueOf(vsimMemory.value));
+        profilingData.setVoptCMDCommand(String.valueOf(voptCommand.value));
+        profilingData.setVsimCMDCommand(String.valueOf(vsimCommand.value));
+        profilingData.setMethodology(String.valueOf(methodology.value));
+        profilingData.setDesignType(String.valueOf(designType.value));
+        profilingData.setDesignCompositionName(String.valueOf(designComposition.value));
+        profilingData.setToolVersion(String.valueOf(toolVersion.value));
+        profilingData.setPlatform(String.valueOf(platform.value));
+        profilingData.setDateOfCollection(String.valueOf(dateOfCollection.value));
+        profilingData.setTotalWallTime(String.valueOf(totalWallTime.value));
+        profilingData.setSolverWallTime(String.valueOf(solverWallTime.value));
+        profilingData.setSolverMemory(String.valueOf(solvermem.value));
+        profilingData.setRandomizeCall(String.valueOf(randomizecall.value));
+        profilingData.setDesignCompositionModules(String.valueOf(DC_modules.value));
+        profilingData.setDesignCompositionPackages(String.valueOf(DC_Packages.value));
+        profilingData.setDesignCompositionInterfaces(String.valueOf(DC_interface.value));
+        profilingData.setDesignCompositionInstances(String.valueOf(DC_inectance.value));
+        profilingData.setFileName(file.getOriginalFilename());
+        profilingDataRepository.save(profilingData);
 
+        TableDataHolder designu = parser.getHolder(DESIGN_UNIT);
+        DesignUnit du=new DesignUnit();
+        for (int i = 0; i <designu.table.size() ; i++) {
+            du.setName(designu.table.get(i).get("Design Unit"));
+            du.setLocalHits(Integer.parseInt(designu.table.get(i).get("Local Hits")));
+            du.setLocalPercentage(designu.table.get(i).get("Local Percentage"));
+            System.out.println(profilingData.getId());
+            du.setProfilerId(profilingData.getId());
+        }
+        designUnitRepository.save(du);
     }
 
 }

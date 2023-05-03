@@ -10,7 +10,6 @@ public class DesignUnit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-
     private Long profilerId;
 
     @Column(name = "Name")
@@ -21,9 +20,9 @@ public class DesignUnit {
     @NotNull
     private Integer localHits;
 
-    @Column(name = "LocalPercentage")
+    @Column(name = "LocalPercentage",length = 10000)
     @NotNull
-    private Double localPercentage;
+    private String localPercentage;
 
     public Long getId() {
         return id;
@@ -57,11 +56,11 @@ public class DesignUnit {
         this.localHits = localHits;
     }
 
-    public Double getLocalPercentage() {
+    public String getLocalPercentage() {
         return localPercentage;
     }
 
-    public void setLocalPercentage(double localPercentage) {
+    public void setLocalPercentage(String localPercentage) {
         this.localPercentage = localPercentage;
     }
 }

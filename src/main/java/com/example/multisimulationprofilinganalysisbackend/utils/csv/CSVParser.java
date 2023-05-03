@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import com.example.multisimulationprofilinganalysisbackend.model.DesignUnit;
 import com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders.BaseDataHolder;
 import com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders.SingleRowDataHolder;
 import com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders.TableDataHolder;
@@ -197,6 +198,11 @@ public class CSVParser {
             System.out.println(du);
             System.out.println("---------------------------------------------");
 
+            for (int i = 0; i <du.table.size() ; i++) {
+                  System.out.println(du.table.get(i).get("Design Unit"));
+                System.out.println(du.table.get(i).get("Local Hits"));
+                System.out.println(du.table.get(i).get("Local Percentage"));
+            }
         }
 
     }
