@@ -101,6 +101,10 @@ public class ProfilingData {
     @OneToMany(mappedBy = "profilerId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<DesignUnit> designUnits = new ArrayList<>();
 
+    @OneToOne
+    @JoinColumn(name="ProfilingDataClusterID", referencedColumnName = "id")
+    private profilingDataClusters profilingDataCluster;
+
     public Long getId() {
         return id;
     }
@@ -275,5 +279,12 @@ public class ProfilingData {
 
     public void setDesignUnits(List<DesignUnit> designUnits) {
         this.designUnits = designUnits;
+    }
+    public profilingDataClusters getProfilingDataCluster() {
+        return profilingDataCluster;
+    }
+
+    public void setProfilingDataCluster(profilingDataClusters profilingDataCluster) {
+        this.profilingDataCluster = profilingDataCluster;
     }
 }
