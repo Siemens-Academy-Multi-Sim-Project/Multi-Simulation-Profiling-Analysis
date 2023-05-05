@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "ProfilingDataClusters")
+@Table(name = "ProfilingDataClusters", 
+uniqueConstraints={
+                   @UniqueConstraint(columnNames = "ClusterName")
+                  })
 public class profilingDataClusters {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +27,6 @@ public class profilingDataClusters {
     
     @Column(name = "ClusterName")
     @NotNull
-    @UniqueElements
     private String clusterName;
     
     public Long getId() {
