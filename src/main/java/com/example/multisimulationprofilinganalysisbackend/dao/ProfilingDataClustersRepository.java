@@ -18,4 +18,6 @@ public interface ProfilingDataClustersRepository extends JpaRepository<profiling
     
     @Query(value = "SELECT count(*) FROM (SELECT design_Composition_Name, design_Composition_Modules,design_Composition_Packages,design_Composition_Interfaces,design_Composition_Instances FROM Profiling_Data WHERE profiling_data_clusterid = :clusterId GROUP BY design_Composition_Name, design_Composition_Modules,design_Composition_Packages,design_Composition_Interfaces,design_Composition_Instances HAVING COUNT(*) > 0 )AS sub", nativeQuery = true)
     String getDesignsNumber(@Param("clusterId") Long clusterID);
+
+    
 }

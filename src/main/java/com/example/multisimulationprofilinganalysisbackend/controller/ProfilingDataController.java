@@ -60,4 +60,9 @@ public class ProfilingDataController {
         }
         return ResponseEntity.ok(profilingDataCluster);
     }
+    @GetMapping("profiling-data-clusters/getProfilingData")
+    public ResponseEntity<List<ProfilingData>> getProfilingDataClusterData(@RequestBody Long clusterID) {
+        List<ProfilingData> res = profilingDataRepository.findProfilingDatas(clusterID);
+        return ResponseEntity.ok(res);
+    }
 }
