@@ -237,6 +237,7 @@ File Name                                                                | Local
 =====================================================
 === '/Design Unit (Vsim Performance Profiler)' Report
 =====================================================
+=====================================================
 Design Unit | Local Hits | Local Time (s) | Local Percentage | Sample Instances | Region        | File and Line
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 uvm_pkg     |      1     |       0.10     |      100.00%     |         1        | SystemVerilog | /bata/rhino/buildsites/main/builds/linux_x86_64/modeltech/linux_x86_64/../verilog_src/uvm-1.1d/src/uvm_pkg.sv:29

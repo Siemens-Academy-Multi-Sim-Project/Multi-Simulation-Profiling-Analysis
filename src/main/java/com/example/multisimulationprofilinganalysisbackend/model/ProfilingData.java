@@ -14,11 +14,9 @@ public class ProfilingData {
     @Column(name = "id", nullable = false)
     private Long id;
 
-
     @Column(name = "Methodology")
     @NotNull
     private String methodology;
-
 
 
     @Column(name = "FileName",length = 10000)

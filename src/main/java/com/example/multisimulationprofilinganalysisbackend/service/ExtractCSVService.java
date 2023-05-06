@@ -42,10 +42,10 @@ public class ExtractCSVService {
         String SOLVER_MEMORY = "Solver Memory";
         String RANDOMIZE_CALLS = "Randomize Calls";
 
-        String DC_MODULES = "    Modules";
-        String DC_PACKAGES = "    Packages";
-        String DC_INTERFACES= "    Interfaces";
-        String DC_INSTANCES = "    Module Instances";
+        String DC_MODULES = "Modules";
+        String DC_PACKAGES = "Packages";
+        String DC_INTERFACES= "Interfaces";
+        String DC_INSTANCES = "Module Instances";
 
         String DESIGN_UNIT = "'/Design Unit (Vsim Performance Profiler)' Report";
 
@@ -66,7 +66,6 @@ public class ExtractCSVService {
                 new SingleRowCsvProperty(SOLVER_WALL_TIME, "|", ","),
                 new SingleRowCsvProperty(SOLVER_MEMORY, "|", ","),
                 new SingleRowCsvProperty(RANDOMIZE_CALLS, "|", ","),
-
 
                 new SingleRowCsvProperty(DC_MODULES, "|", ","),
                 new SingleRowCsvProperty(DC_PACKAGES, "|", ","),
@@ -131,7 +130,6 @@ public class ExtractCSVService {
             du.setName(designu.table.get(i).get("Design Unit"));
             du.setLocalHits(Integer.parseInt(designu.table.get(i).get("Local Hits")));
             du.setLocalPercentage(designu.table.get(i).get("Local Percentage"));
-            System.out.println(profilingData.getId());
             du.setProfilerId(profilingData.getId());
         }
         designUnitRepository.save(du);
