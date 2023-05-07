@@ -73,4 +73,9 @@ public class ProfilingDataController {
         profilingDataClusters res = profilingDataClustersRepository.getById(id);
         return ResponseEntity.ok(res);
     }
+    @GetMapping("profiling-data-clusters/all")
+    public ResponseEntity<List<profilingDataClusters>> getAllProfilingDataClusters() {
+        List<profilingDataClusters> res = profilingDataClustersRepository.findAll();
+        return ResponseEntity.ok(res);
+    }
 }
