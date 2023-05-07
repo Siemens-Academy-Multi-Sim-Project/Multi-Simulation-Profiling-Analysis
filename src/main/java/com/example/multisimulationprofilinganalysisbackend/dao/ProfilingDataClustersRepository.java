@@ -1,4 +1,5 @@
 package com.example.multisimulationprofilinganalysisbackend.dao;
+
 import com.example.multisimulationprofilinganalysisbackend.model.DesignUnit;
 import com.example.multisimulationprofilinganalysisbackend.model.ProfilingData;
 import com.example.multisimulationprofilinganalysisbackend.model.profilingDataClusters;
@@ -15,9 +16,16 @@ public interface ProfilingDataClustersRepository extends JpaRepository<profiling
     @Query(value = "SELECT COUNT(*) FROM profilingdataclusters", nativeQuery = true)
     int getclustersNumber();
 
-    
+
     @Query(value = "SELECT count(*) FROM (SELECT designcompositioninstances, designcompositionmodules,designcompositionpackages,designcompositioninterfaces,designcompositioninstances FROM profilingdata WHERE profilingdataclusterid = :clusterId GROUP BY designcompositionname, designcompositionmodules,designcompositionpackages,designcompositioninterfaces,designcompositioninstances HAVING COUNT(*) > 0 )AS sub", nativeQuery = true)
     String getDesignsNumber(@Param("clusterId") Long clusterID);
 
-    
+    @Query(value = "SELECT id FROM profilingdataclusters where clustername = :clusterName", nativeQuery = true)
+    Long getClusterId(@Param("clusterName") String clusterName);
+
+    @Query(value = "SELECT * FROM profilingdataclusters WHERE profilingdataclusters.id = :clusterId", nativeQuery = true)
+    List<profilingDataClusters> getByClusterName(@Param("clusterId") Long clusterID);
+
+
+    profilingDataClusters getById(Long clusterID);
 }
