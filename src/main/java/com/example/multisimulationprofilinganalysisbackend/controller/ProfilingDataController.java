@@ -3,6 +3,7 @@ package com.example.multisimulationprofilinganalysisbackend.controller;
 import com.example.multisimulationprofilinganalysisbackend.dao.ProfilingDataClustersRepository;
 import com.example.multisimulationprofilinganalysisbackend.dao.ProfilingDataRepository;
 import com.example.multisimulationprofilinganalysisbackend.dto.AddProfilingDataRequest;
+import com.example.multisimulationprofilinganalysisbackend.model.CreateClusterDTO;
 import com.example.multisimulationprofilinganalysisbackend.model.ProfilingData;
 import com.example.multisimulationprofilinganalysisbackend.model.profilingDataClusters;
 
@@ -23,6 +24,19 @@ public class ProfilingDataController {
     public ResponseEntity<List<ProfilingData>> getAllProfilingData() {
         List<ProfilingData> res = profilingDataRepository.findAll();
         return ResponseEntity.ok(res);
+    }
+
+    @PostMapping("profiling-data/create-cluster")
+    public ResponseEntity<String> createCluster(@RequestBody CreateClusterDTO dto){
+        String name = dto.clusterName;
+        var clusterId = profilingDataClustersRepository.getClusterId(name);
+        if(clusterId != null){
+            return ResponseEntity.ok(name);
+        }
+        var newCluster = new profilingDataClusters();
+        newCluster.setClusterName(name);
+        profilingDataClustersRepository.save(newCluster);
+        return ResponseEntity.ok(name);
     }
 
     @PostMapping("profiling-data/add")
