@@ -32,34 +32,35 @@ public class ProfilingDataController {
         return ResponseEntity.ok(profilingData);
     }
 
-    
+
     @GetMapping("profiling-data/getDesignsNumber")
     public ResponseEntity<String> getProfilingDataDesignNumber() {
         String res = profilingDataRepository.getDesignsNumber();
         return ResponseEntity.ok(res);
     }
+
     @GetMapping("profiling-data-clusters/getDesignsNumber")
     public ResponseEntity<String> getProfilingDataClusterDesignNumber(@RequestBody Long clusterID) {
         String res = profilingDataClustersRepository.getDesignsNumber(clusterID);
         return ResponseEntity.ok(res);
     }
+
     @PostMapping("profiling-data-clusters/add")
     public ResponseEntity<profilingDataClusters> addProfilingDataClusters(@RequestBody AddProfilingDataRequest request) {
-        String clusterid=profilingDataClustersRepository.getclustersNumber();
-        profilingDataClusters profilingDataCluster=new profilingDataClusters(); 
-        profilingDataCluster.setClusterID(clusterid+1);
+        profilingDataClusters profilingDataCluster = new profilingDataClusters();
         profilingDataCluster.setClusterName(request.getClusterName());
         profilingDataClustersRepository.save(profilingDataCluster);
         ProfilingData profilingData;
         List<ProfilingData> pd = request.getPd();
         for (ProfilingData i : pd) {
-            profilingData=i;
+            profilingData = i;
             profilingData.setProfilingDataCluster(profilingDataCluster);
             profilingDataRepository.save(profilingData);
             System.out.println(profilingData);
         }
         return ResponseEntity.ok(profilingDataCluster);
     }
+
     @GetMapping("profiling-data-clusters/getProfilingData")
     public ResponseEntity<List<ProfilingData>> getProfilingDataClusterData(@RequestBody Long clusterID) {
         List<ProfilingData> res = profilingDataRepository.findProfilingDatas(clusterID);
