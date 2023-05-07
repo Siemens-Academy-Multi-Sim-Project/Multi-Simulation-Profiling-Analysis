@@ -96,10 +96,10 @@ public class ExtractCSVService {
         SingleRowDataHolder solverWallTime=parser.getHolder(SOLVER_WALL_TIME);
         SingleRowDataHolder solvermem=parser.getHolder(SOLVER_MEMORY);
         SingleRowDataHolder randomizecall=parser.getHolder(RANDOMIZE_CALLS);
-        SingleRowDataHolder DC_modules=parser.getHolder(RANDOMIZE_CALLS);
-        SingleRowDataHolder DC_Packages=parser.getHolder(RANDOMIZE_CALLS);
-        SingleRowDataHolder DC_interface=parser.getHolder(RANDOMIZE_CALLS);
-        SingleRowDataHolder DC_inectance=parser.getHolder(RANDOMIZE_CALLS);
+        SingleRowDataHolder DC_modules=parser.getHolder(DC_MODULES);
+        SingleRowDataHolder DC_Packages=parser.getHolder(DC_PACKAGES);
+        SingleRowDataHolder DC_interface=parser.getHolder(DC_INTERFACES);
+        SingleRowDataHolder DC_inectance=parser.getHolder(DC_INSTANCES);
 
 
         ProfilingData profilingData=new ProfilingData();
