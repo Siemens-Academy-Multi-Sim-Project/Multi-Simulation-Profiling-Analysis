@@ -68,5 +68,4 @@ public class SingleRowCsvProperty extends CsvProperty<SingleRowDataHolder> {
         var holder = new SingleRowDataHolder(this.propertyName);
         return holder;
     }
-    
 }

@@ -5,7 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
+import com.example.multisimulationprofilinganalysisbackend.model.DesignUnit;
 import com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders.BaseDataHolder;
 import com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders.SingleRowDataHolder;
 import com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders.TableDataHolder;
@@ -49,21 +51,19 @@ public class CSVParser {
         resetProperties();
         try (BufferedReader fileReader = new BufferedReader(new FileReader(filePath))) {
             for (String line = fileReader.readLine(); line != null; line = fileReader.readLine()) {
+                fileReader.mark(BUFFERED_REDER_READ_LIMIT); // mark where the property will start searching in the file
                 for (CsvProperty<BaseDataHolder> property : properties.values()) {
                     if (property.isParsed()) {
                         continue;
                     }
 
-                    fileReader.mark(BUFFERED_REDER_READ_LIMIT); // mark where the property will start searching in the
-                                                                // file
                     List<String> foundLines = property.findProperty(fileReader); // pass fileReader to property to start
                                                                                  // the search
-                    if (foundLines.isEmpty()) { // property wasn't found, so reset to original position
-                        fileReader.reset();
-                    } else {
+                    if (!foundLines.isEmpty()) {
                         var parsedProperty = property.parseProperty(foundLines);
                         this.parsedProperties.put(property.getPropertyName(), parsedProperty);
                     }
+                    fileReader.reset();
                 }
             }
 
@@ -74,7 +74,7 @@ public class CSVParser {
     }
 
     private void resetProperties() {
-        for(CsvProperty property: properties.values()){
+        for (CsvProperty property : properties.values()) {
             property.reset();
         }
     }
@@ -93,33 +93,117 @@ public class CSVParser {
         String VOPT_TIME = "Vopt Time";
         String VOPT_MEMORY = "Vopt Memory";
         String VSIM_MEMORY = "Vsim Memory";
+        String VOPT_COMMAND_LINE = "Vopt Command Line";
+        String VSIM_COMMAND_LINE = "Vsim Command Line";
+        String METHODOLOGY = "Methodology";
+        String DESIGN_TYPE = "Design Type";
+        String DESIGN_COMPOSITION = "Design Composition";
+        String TOOL_VERSION = "Tool Version";
+        String PLATFORM = "Platform";
+        String DATE_OF_COLLECTION = "Date of Collection";
+        String TOTAL_WALL_TIME = "Total Wall Time";
+        String SOLVER_WALL_TIME = "Solver Wall Time";
+        String SOLVER_MEMORY = "Solver Memory";
+        String RANDOMIZE_CALLS = "Randomize Calls";
+
+        String DESIGN_UNIT = "'/Design Unit (Vsim Performance Profiler)' Report";
         CSVParser parser = new CSVParser(
             new SingleRowCsvProperty(VSIM_TIME, "|", ","),
             new SingleRowCsvProperty(VOPT_TIME, "|", ","),
             new SingleRowCsvProperty(VOPT_MEMORY, "|", ","),
-            new SingleRowCsvProperty(VSIM_MEMORY, "|", ",")
-        );
+            new SingleRowCsvProperty(VSIM_MEMORY, "|", ","),
+            new SingleRowCsvProperty(VOPT_COMMAND_LINE, "|", ","),
+            new SingleRowCsvProperty(VSIM_COMMAND_LINE, "|", ","),
+            new SingleRowCsvProperty(METHODOLOGY, "|", ","),
+            new SingleRowCsvProperty(DESIGN_TYPE, "|", ","),
+            new SingleRowCsvProperty(DESIGN_COMPOSITION, "|", ","),
+            new SingleRowCsvProperty(TOOL_VERSION, "|", ","),
+            new SingleRowCsvProperty(PLATFORM, "|", ","),
+            new SingleRowCsvProperty(DATE_OF_COLLECTION, "|", ","),
+            new SingleRowCsvProperty(TOTAL_WALL_TIME, "|", ","),
+            new SingleRowCsvProperty(SOLVER_WALL_TIME, "|", ","),
+            new SingleRowCsvProperty(SOLVER_MEMORY, "|", ","),
+            new SingleRowCsvProperty(RANDOMIZE_CALLS, "|", ","),
+            new QuestaSimTableCsvProperty(DESIGN_UNIT, "|", ","));
 
         String[] files = {
-            "ethmac_3997.csv",
-            "Silabs_design_usage_profiler_data.csv"
+                "ethmac_3997.csv",
         };
 
-        for(String file: files){
-            System.out.println(file);
+        for (String file : files) {
             parser.parseFile(file);
+
             SingleRowDataHolder vsimTime = parser.getHolder(VSIM_TIME);
             System.out.println(vsimTime.propertyName + ": " + vsimTime.value);
 
             SingleRowDataHolder voptTime = parser.getHolder(VOPT_TIME);
             System.out.println(voptTime.propertyName + ": " + voptTime.value);
-            
+
             SingleRowDataHolder vsimMemory = parser.getHolder(VSIM_MEMORY);
             System.out.println(vsimMemory.propertyName + ": " + vsimMemory.value);
-            
+
             SingleRowDataHolder voptMemory = parser.getHolder(VOPT_MEMORY);
             System.out.println(voptMemory.propertyName + ": " + voptMemory.value);
             System.out.println("---------------------------------------------");
+
+            SingleRowDataHolder voptCommand = parser.getHolder(VOPT_COMMAND_LINE);
+            System.out.println(voptCommand.propertyName + ": " + voptCommand.value);
+            System.out.println("---------------------------------------------");
+
+            SingleRowDataHolder vsimCommand = parser.getHolder(VSIM_COMMAND_LINE);
+            System.out.println(vsimCommand.propertyName + ": " + vsimCommand.value);
+            System.out.println("---------------------------------------------");
+
+            SingleRowDataHolder methodology = parser.getHolder(METHODOLOGY);
+            System.out.println(methodology.propertyName + ": " + methodology.value);
+            System.out.println("---------------------------------------------");
+
+            SingleRowDataHolder designType = parser.getHolder(DESIGN_TYPE);
+            System.out.println(designType.propertyName + ": " + designType.value);
+            System.out.println("---------------------------------------------");
+
+            SingleRowDataHolder designComposition = parser.getHolder(DESIGN_COMPOSITION);
+            System.out.println(designComposition.propertyName + ": " + designComposition.value);
+            System.out.println("---------------------------------------------");
+
+            SingleRowDataHolder toolVersion = parser.getHolder(TOOL_VERSION);
+            System.out.println(toolVersion.propertyName + ": " + toolVersion.value);
+            System.out.println("---------------------------------------------");
+
+            SingleRowDataHolder platform = parser.getHolder(PLATFORM);
+            System.out.println(platform.propertyName + ": " + platform.value);
+            System.out.println("---------------------------------------------");
+
+            SingleRowDataHolder dateOfCollection = parser.getHolder(DATE_OF_COLLECTION);
+            System.out.println(dateOfCollection.propertyName + ": " + dateOfCollection.value);
+            System.out.println("---------------------------------------------");
+
+            SingleRowDataHolder totalWallTime = parser.getHolder(TOTAL_WALL_TIME);
+            System.out.println(totalWallTime.propertyName + ": " + totalWallTime.value);
+            System.out.println("---------------------------------------------");
+
+            SingleRowDataHolder solverWallTime = parser.getHolder(SOLVER_WALL_TIME);
+            System.out.println(solverWallTime.propertyName + ": " + solverWallTime.value);
+            System.out.println("---------------------------------------------");
+
+            SingleRowDataHolder solvermem = parser.getHolder(SOLVER_MEMORY);
+            System.out.println(solvermem.propertyName + ": " + solvermem.value);
+            System.out.println("---------------------------------------------");
+
+            SingleRowDataHolder randomizecall = parser.getHolder(RANDOMIZE_CALLS);
+            System.out.println(randomizecall.propertyName + ": " + randomizecall.value);
+            System.out.println("---------------------------------------------");
+
+            TableDataHolder du = parser.getHolder(DESIGN_UNIT);
+            System.out.println(du);
+            System.out.println("---------------------------------------------");
+
+            for (int i = 0; i <du.table.size() ; i++) {
+                  System.out.println(du.table.get(i).get("Design Unit"));
+                System.out.println(du.table.get(i).get("Local Hits"));
+                System.out.println(du.table.get(i).get("Local Percentage"));
+            }
         }
+
     }
 }

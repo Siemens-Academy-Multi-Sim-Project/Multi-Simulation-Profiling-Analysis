@@ -1,7 +1,10 @@
 package com.example.multisimulationprofilinganalysisbackend.appuser;
 
 
+import com.example.multisimulationprofilinganalysisbackend.email.EmailBuilder;
+import com.example.multisimulationprofilinganalysisbackend.email.EmailSender;
 import com.example.multisimulationprofilinganalysisbackend.registration.token.ConfirmationToken;
+import com.example.multisimulationprofilinganalysisbackend.registration.token.ConfirmationTokenRepository;
 import com.example.multisimulationprofilinganalysisbackend.registration.token.ConfirmationTokenService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,15 +22,20 @@ public class AppUserService implements UserDetailsService {
             "user with email %s not found";
 
     private final AppUserRepository appUserRepository;
+    private final ConfirmationTokenRepository tokenRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
 
-
-
-    public AppUserService(AppUserRepository appUserRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ConfirmationTokenService confirmationTokenService) {
+    public AppUserService(
+        AppUserRepository appUserRepository, 
+        BCryptPasswordEncoder bCryptPasswordEncoder, 
+        ConfirmationTokenService confirmationTokenService, 
+        ConfirmationTokenRepository tokenRepository
+        ) {
         this.appUserRepository = appUserRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.confirmationTokenService = confirmationTokenService;
+        this.tokenRepository = tokenRepository;
     }
 
 
@@ -42,14 +50,16 @@ public class AppUserService implements UserDetailsService {
     }
 
     public String signUpUser(AppUser appUser) {
-        boolean userExists = appUserRepository
-                .findByEmail(appUser.getEmail())
-                .isPresent();
+        var userOptional = appUserRepository.findByEmail(appUser.getEmail());
 
-        if (userExists) {
-            // TODO check of attributes are the same and
-            // TODO if email not confirmed send confirmation email.
-
+        if (userOptional.isPresent()) {
+            var retrievedUser = userOptional.get();
+            if(!retrievedUser.isEnabled()){
+                var optionalToken = tokenRepository.findByAppUser(retrievedUser);
+                if(optionalToken.isPresent()){
+                    return optionalToken.get().getToken();
+                }
+            }
             throw new IllegalStateException("email already taken");
         }
 

@@ -13,4 +13,9 @@ public class SingleRowDataHolder extends BaseDataHolder {
         value = "";
     }
 
+    @Override
+    public String toString() {
+        return this.propertyName + ": " + this.value;
+    }
+
 }

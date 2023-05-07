@@ -19,6 +19,12 @@ public class ProfilingData {
     @NotNull
     private String methodology;
 
+
+
+    @Column(name = "FileName",length = 10000)
+    @NotNull
+    private String FileName;
+
     @Column(name = "DesignType")
     @NotNull
     private String designType;
@@ -61,7 +67,7 @@ public class ProfilingData {
     @NotNull
     private String voptMemory;
 
-    @Column(name = "VoptCMDCommand")
+    @Column(name = "VoptCMDCommand",length=10000)
     @NotNull
     private String voptCMDCommand;
 
@@ -75,7 +81,7 @@ public class ProfilingData {
     @NotNull
     private String vsimMemory;
 
-    @Column(name = "VsimCMDCommand")
+    @Column(name = "VsimCMDCommand",length=10000)
     @NotNull
     private String vsimCMDCommand;
 
@@ -100,6 +106,10 @@ public class ProfilingData {
 
     @OneToMany(mappedBy = "profilerId", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<DesignUnit> designUnits = new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name="ProfilingDataClusterID", referencedColumnName = "id")
+    private profilingDataClusters profilingDataCluster;
 
     public Long getId() {
         return id;
@@ -268,6 +278,13 @@ public class ProfilingData {
     public void setDesignCompositionInstances(String designCompositionInstances) {
         this.designCompositionInstances = designCompositionInstances;
     }
+    public String getFileName() {
+        return FileName;
+    }
+
+    public void setFileName(String fileName) {
+        FileName = fileName;
+    }
 
     public List<DesignUnit> getDesignUnits() {
         return designUnits;
@@ -275,5 +292,12 @@ public class ProfilingData {
 
     public void setDesignUnits(List<DesignUnit> designUnits) {
         this.designUnits = designUnits;
+    }
+    public profilingDataClusters getProfilingDataCluster() {
+        return profilingDataCluster;
+    }
+
+    public void setProfilingDataCluster(profilingDataClusters profilingDataCluster) {
+        this.profilingDataCluster = profilingDataCluster;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.multisimulationprofilinganalysisbackend.utils;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class StringUtils {
@@ -8,11 +9,12 @@ public class StringUtils {
     }
 
     public static String[] trim(String[] arr){
-        String[] trimmedArr = new String[arr.length];
+        ArrayList<String> trimmedArr = new ArrayList<>();
         for(int i = 0; i < arr.length; i++){
-            trimmedArr[i] = arr[i].trim();
+            if(arr[i].isEmpty() || arr[i].isBlank()) continue;
+            trimmedArr.add(arr[i].trim());
         }
-        return trimmedArr;
+        return trimmedArr.toArray(new String[0]);
     }
 
     public static String[] splitAndTrim(String line, String delimiter){

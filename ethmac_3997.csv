@@ -1,0 +1,318 @@
+
+###################
+### Profiler Report
+###################
+
+************************************************
+*** 'Solver Performance Profiler' Session Report
+************************************************
+
+**********************
+*** Session Properties
+**********************
+Property                       | Value                                                                                                        | Session                       
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+FPROF_BUILD_TYPE               | assert                                                                                                       | Solver Performance Profiler   
+FPROF_TOOL_VERSION             | QA Baseline: 2024.1 Beta - 5541880                                                                           | Solver Performance Profiler   
+FPROF_DATE                     | Fri Mar 31 03:28:32 2023                                                                                     | Solver Performance Profiler   
+Session                        | Solver Performance Profiler                                                                                  | Solver Performance Profiler   
+FDB                            | ./VRMDATA/regression/simulate/test~ethmac_reg_reset_test/fprofile/vsim_20230331032832_3997_orw-habdel-ct.fdb | Solver Performance Profiler   
+Version                        | QA Baseline: 2024.1 Beta - 5541880                                                                           | Solver Performance Profiler   
+Date                           | Fri Mar 31 03:28:32 2023                                                                                     | Solver Performance Profiler   
+Total Wall Time                | 2.130s                                                                                                       | Solver Performance Profiler   
+Solver Wall Time               | 0.000s                                                                                                       | Solver Performance Profiler   
+Solver Memory                  | 0.65 MB                                                                                                      | Solver Performance Profiler   
+Randomize Calls                | 0                                                                                                            | Solver Performance Profiler   
+
+===================================================
+=== '/Summary (Solver Performance Profiler)' Report
+===================================================
+Name   | Value
+----------------
+Other  | 100.00%
+Solver |   0.00%
+
+
+=======================================================
+=== End '/Summary (Solver Performance Profiler)' Report
+=======================================================
+
+****************************************************
+*** End 'Solver Performance Profiler' Session Report
+****************************************************
+
+*********************************
+*** 'HDL Analysis' Session Report
+*********************************
+
+**********************
+*** Session Properties
+**********************
+Property                       | Value                          | Session                       
+------------------------------------------------------------------------------------------------
+FPROF_BUILD_TYPE               | assert                         | HDL Analysis                  
+FPROF_DATE                     | Fri Mar 31 03:28:32 2023       | HDL Analysis                  
+
+==========================================
+=== '/Usage Profile (HDL Analysis)' Report
+==========================================
+Name                                                           | Usage
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Vsim Time                                                      | 2.13 sec
+  Elaboration Time                                             | 1.74 sec
+    Elaboration Wall Time                                      | 1.74 sec
+    Elaboration CPU Time                                       | 1.04 sec
+    Elaboration CPU Process Time                               | 0.88 sec
+    Elaboration CPU System Time                                | 0.16 sec
+    Elaboration CPU Utilization (%)                            | 59.77
+  Simulation Time                                              | 0.39 sec
+    Vsim Wall Time                                             | 0.39 sec
+    Vsim CPU Time                                              | 0.20 sec
+    Vsim CPU Process Time                                      | 0.14 sec
+    Vsim CPU System Time                                       | 0.06 sec
+    Vsim CPU Utilization (%)                                   | 51.28
+  Log Time                                                     | 
+    Log Wall Time                                              | 0.14 sec
+    Log CPU Time                                               | 0.00 sec
+    Log CPU Process Time                                       | 0.00 sec
+    Log CPU System Time                                        | 0.00 sec
+    Log CPU Utilization (%)                                    | 0.00
+  Total Time                                                   | 2.13 sec
+    Total Wall Time                                            | 2.13 sec
+    Total CPU Time                                             | 1.24 sec
+    Total CPU Process Time                                     | 1.02 sec
+    Total CPU System Time                                      | 0.22 sec
+    Total CPU Utilization (%)                                  | 58.22
+  HDL Simulation time                                          | 13071000 ps
+  Cycles Per Second(CPS)                                       | 10541130
+  Simulation time resolution                                   | 10ps
+Vopt Time                                                      | 3.65 sec
+  Analysis Time                                                | 1.31 sec
+    Analysis - Wall Time                                       | 1.31 sec
+    Analysis - CPU Time                                        | 1.21 sec
+    Analysis -  Process Time                                   | 1.15 sec
+    Analysis - System Time                                     | 0.06 sec
+  Code Generation Time                                         | 2.34 sec
+    Code Generation - Wall Time                                | 2.34 sec
+    Code Generation - CPU Time                                 | 4.73 sec
+    Code Generation - Process Time                             | 4.22 sec
+    Code Generation - System Time                              | 0.51 sec
+  Total Time                                                   | 3.65 sec
+    Total Wall Time                                            | 3.65 sec
+    Total CPU Time                                             | 5.94 sec
+    Total Process Time                                         | 5.37 sec
+    Total System Time                                          | 0.57 sec
+  Parallel Processes                                           | 8
+Vsim Memory                                                    | 0.75 GB
+  Size After Elaboration (VSZ)                                 | 0.75 GB
+  Active Memory After Elaboration (RSS)                        | 0.22 GB
+  Size During Simulation (VSZ)                                 | 0.75 GB
+  Active Memory During Simulation (RSS)                        | 0.22 GB
+Vopt Memory                                                    | 0.38 GB
+  Peak Memory Size (VSZ)                                       | 0.38 GB
+  Peak Active Memory Size (RSS)                                | 0.08 GB
+  Analysis Peak Memory Size (VSZ)                              | 0.38 GB
+  Analysis Active Memory Size (RSS)                            | 0.08 GB
+  Code Generation Peak Memory Size (VSZ)                       | 0.38 GB
+  Code Generation Active Memory Size (RSS)                     | 0.08 GB
+Vopt Command Line                                              | vopt -fprofile "+acc" -o ethmac_tb_opt -2008 "+floatparameters+UVM_TESTNAME+tx_cov_monitor+rx_cov_monitor" -mfcu -timescale 1ns/1ns -timescale 1ns/10ps -csessiondir /home/habdel/viq/ethermac-2022.1/sim/vrm/VRMDATA/regression/Compile/qrun.out/sessions eth_dut_binds ethmac_tb -work /home/habdel/viq/ethermac-2022.1/sim/vrm/VRMDATA/regression/Compile/qrun.out/work -statslog /home/habdel/viq/ethermac-2022.1/sim/vrm/VRMDATA/regression/Compile/qrun.out/stats_log -csession=incr -csessionid=1 
+  Debug                                                        | 
+    +acc                                                       | 
+  General                                                      | 
+    -o                                                         |  ethmac_tb_opt
+    -work                                                      |  /home/habdel/viq/ethermac-2022.1/sim/vrm/VRMDATA/regression/Compile/qrun.out/work
+  Language                                                     | 
+    -2008                                                      | 
+    -mfcu                                                      | 
+    -timescale                                                 |  1ns/1ns -timescale 1ns/10ps
+  Report                                                       | 
+    -fprofile                                                  | 
+  Others category                                              | 
+    +floatparameters                                           | +floatparameters+UVM_TESTNAME+tx_cov_monitor+rx_cov_monitor
+    -csessiondir                                               |  /home/habdel/viq/ethermac-2022.1/sim/vrm/VRMDATA/regression/Compile/qrun.out/sessions
+    -statslog                                                  |  /home/habdel/viq/ethermac-2022.1/sim/vrm/VRMDATA/regression/Compile/qrun.out/stats_log
+    -csessionid                                                | -csessionid=1
+  Undocumented options                                         | 
+    -csession                                                  | -csession=incr
+Vsim Command Line                                              | vsim -c -assertcounts -lib /home/habdel/viq/ethermac-2022.1/sim/vrm/VRMDATA/regression/Compile/qrun.out/work ethmac_tb_opt -sv_seed 822784415 +SEED=822784415 -fprofile+perf+solver+stats +UVM_TESTNAME=ethmac_reg_test +tx_cov_monitor=ethmac_tx_ethframe_cov +rx_cov_monitor=ethmac_rx_ethframe_cov +uvm_set_type_override=ethmac_reg_seq,ethmac_reg_reset_seq -uvmcontrol=struct -msgmode both -displaymsgmode both -GfailureRate=8 
+  Debug                                                        | 
+    -assertcounts                                              | 
+  General                                                      | 
+    -c                                                         | 
+    -displaymsgmode                                            |  both
+    -G                                                         |  -GfailureRate=8
+  Language                                                     | 
+    -uvmcontrol                                                | -uvmcontrol=struct
+  Library                                                      | 
+    -lib                                                       |  /home/habdel/viq/ethermac-2022.1/sim/vrm/VRMDATA/regression/Compile/qrun.out/work
+  Messages                                                     | 
+    -msgmode                                                   |  both
+  Report                                                       | 
+    -fprofile                                                  | -fprofile+perf+solver+stats
+  Solver                                                       | 
+    -sv_seed                                                   |  822784415
+  Plus options                                                 | 
+    +SEED=822784415                                            | 
+    +UVM_TESTNAME=ethmac_reg_test                              | 
+    +tx_cov_monitor=ethmac_tx_ethframe_cov                     | 
+    +rx_cov_monitor=ethmac_rx_ethframe_cov                     | 
+    +uvm_set_type_override=ethmac_reg_seq,ethmac_reg_reset_seq | 
+Methodology                                                    | UVM
+  UVM                                                          | /bata/rhino/buildsites/main/builds/linux_x86_64/modeltech/uvm-1.1d.uvm_pkg
+                                                               | /bata/rhino/buildsites/main/builds/linux_x86_64/modeltech/uvm-1.1d.questa_uvm_pkg
+Design Type                                                    | RTL
+Design Composition                                             | SV (DU: 77)
+  SV                                                           | 
+    Modules                                                    | 49
+    Packages                                                   | 19
+    Interfaces                                                 | 9
+    Module Instances                                           | 78
+Tool Details                                                   | QA Baseline: 2024.1 Beta - 5541880
+  Tool Version                                                 | QA Baseline: 2024.1 Beta - 5541880
+  Platform                                                     | linux_x86_64
+  Date of Collection                                           | 03/31/2023 at 03:28
+  Vopt Directory                                               | /home/habdel/viq/ethermac-2022.1/sim/vrm/VRMDATA/regression/compile
+  Vsim Directory                                               | /home/habdel/viq/ethermac-2022.1/sim/vrm/VRMDATA/regression/simulate/test~ethmac_reg_reset_test
+Simulation Machine Details                                     | Off grid
+  Hostname                                                     | orw-habdel-ct
+  Host OS                                                      | CentOS Linux release 7.9.2009 (Core)
+  Host Type                                                    | Off grid
+
+
+==============================================
+=== End '/Usage Profile (HDL Analysis)' Report
+==============================================
+
+*************************************
+*** End 'HDL Analysis' Session Report
+*************************************
+
+**********************************************
+*** 'Vsim Performance Profiler' Session Report
+**********************************************
+
+**********************
+*** Session Properties
+**********************
+Property                       | Value                                                                                                        | Session                       
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+FPROF_BUILD_TYPE               | assert                                                                                                       | Vsim Performance Profiler     
+FPROF_TOOL_VERSION             | QA Baseline: 2024.1 Beta - 5541880                                                                           | Vsim Performance Profiler     
+FPROF_DATE                     | Fri Mar 31 03:28:32 2023                                                                                     | Vsim Performance Profiler     
+Session                        | Vsim Performance Profiler                                                                                    | Vsim Performance Profiler     
+FDB                            | ./VRMDATA/regression/simulate/test~ethmac_reg_reset_test/fprofile/vsim_20230331032832_3997_orw-habdel-ct.fdb | Vsim Performance Profiler     
+Version                        | QA Baseline: 2024.1 Beta - 5541880                                                                           | Vsim Performance Profiler     
+Date                           | Fri Mar 31 03:28:32 2023                                                                                     | Vsim Performance Profiler     
+Total Wall Time                | 2.130000 s                                                                                                   | Vsim Performance Profiler     
+Total Samples                  | 1                                                                                                            | Vsim Performance Profiler     
+HDL Simulation Time            | 13071000 ps                                                                                                  | Vsim Performance Profiler     
+Sampling Duration              | 0 ps                                                                                                         | Vsim Performance Profiler     
+Sampling Start Time            | 1287900 ps                                                                                                   | Vsim Performance Profiler     
+Sampling End Time              | 1287900 ps                                                                                                   | Vsim Performance Profiler     
+
+=================================================
+=== '/Summary (Vsim Performance Profiler)' Report
+=================================================
+Name | Percentage | Hits
+------------------------
+SV   |   100.00%  |   1
+
+
+=====================================================
+=== End '/Summary (Vsim Performance Profiler)' Report
+=====================================================
+
+===============================================
+=== '/Files (Vsim Performance Profiler)' Report
+===============================================
+File Name                                                                | Local Hits | Local Time (s) | Local Percentage
+-------------------------------------------------------------------------------------------------------------------------
+/home/habdel/viq/ethermac-2022.1/sim/../sv/wb_agent/wb_master_rw_seq.svh |      1     |       0.10     |      100.00%
+
+
+===================================================
+=== End '/Files (Vsim Performance Profiler)' Report
+===================================================
+
+=====================================================
+=== '/Design Unit (Vsim Performance Profiler)' Report
+=====================================================
+Design Unit | Local Hits | Local Time (s) | Local Percentage | Sample Instances | Region        | File and Line
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+uvm_pkg     |      1     |       0.10     |      100.00%     |         1        | SystemVerilog | /bata/rhino/buildsites/main/builds/linux_x86_64/modeltech/linux_x86_64/../verilog_src/uvm-1.1d/src/uvm_pkg.sv:29
+
+
+=========================================================
+=== End '/Design Unit (Vsim Performance Profiler)' Report
+=========================================================
+
+====================================================
+=== '/Structural (Vsim Performance Profiler)' Report
+====================================================
+Name                                        | Local Hits | Local Time (s) | Scope Hits | Scope Time (s) | Scope Percentage | Local Percentage | Region        | Design Unit | File and Line
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+uvm_pkg                                     |      0     |       0.00     |      1     |       0.10     |      100.00%     |        0.00%     | SystemVerilog | uvm_pkg     | /bata/rhino/buildsites/main/builds/linux_x86_64/modeltech/linux_x86_64/../verilog_src/uvm-1.1d/src/uvm_pkg.sv:29
+  uvm_sequence_base                         |      0     |       0.00     |      1     |       0.10     |      100.00%     |        0.00%     | SystemVerilog | uvm_pkg     | /bata/rhino/buildsites/main/builds/linux_x86_64/modeltech/linux_x86_64/../verilog_src/uvm-1.1d/src/seq/uvm_sequence_base.svh:134
+    start                                   |      0     |       0.00     |      1     |       0.10     |      100.00%     |        0.00%     | SystemVerilog | uvm_pkg     | /bata/rhino/buildsites/main/builds/linux_x86_64/modeltech/linux_x86_64/../verilog_src/uvm-1.1d/src/seq/uvm_sequence_base.svh:240
+      fork_block:1254(#ublk#215181159#1254) |      1     |       0.10     |      1     |       0.10     |      100.00%     |      100.00%     | Process       | uvm_pkg     | /bata/rhino/buildsites/main/builds/linux_x86_64/modeltech/linux_x86_64/../verilog_src/uvm-1.1d/src/base/uvm_objection.svh:1228
+
+
+========================================================
+=== End '/Structural (Vsim Performance Profiler)' Report
+========================================================
+
+=========================================================
+=== '/Function Ranked (Vsim Performance Profiler)' Report
+=========================================================
+Name                   | Local Hits | Scope Hits | Local Time (s) | Scope Time (s) | Local Percentage | Scope Percentage | File and Line                                                                  | Source       | Region
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+wb_master_rw_seq::body |      1     |      1     |       0.10     |       0.10     |      100.00%     |      100.00%     | /home/habdel/viq/ethermac-2022.1/sim/../sv/wb_agent/wb_master_rw_seq.svh:46-51 | task body(); | SystemVerilog
+
+
+=============================================================
+=== End '/Function Ranked (Vsim Performance Profiler)' Report
+=============================================================
+
+=====================================================
+=== '/Line Ranked (Vsim Performance Profiler)' Report
+=====================================================
+Source           | Local Hits | Scope Hits | Local Time (s) | Scope Time (s) | Local Percentage | Scope Percentage | File and Line                                                               | Region
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+start_item(req); |      1     |      1     |       0.10     |       0.10     |      100.00%     |      100.00%     | /home/habdel/viq/ethermac-2022.1/sim/../sv/wb_agent/wb_master_rw_seq.svh:47 | SystemVerilog
+
+
+=========================================================
+=== End '/Line Ranked (Vsim Performance Profiler)' Report
+=========================================================
+
+===========================================================
+=== '/Function Calltree (Vsim Performance Profiler)' Report
+===========================================================
+Name                   | Local Hits | Scope Hits | Local Time (s) | Scope Time (s) | Local Percentage | Scope Percentage | File and Line                                                                  | Source       | Region
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+wb_master_rw_seq::body |      1     |      1     |       0.10     |       0.10     |      100.00%     |      100.00%     | /home/habdel/viq/ethermac-2022.1/sim/../sv/wb_agent/wb_master_rw_seq.svh:46-51 | task body(); | SystemVerilog
+
+
+===============================================================
+=== End '/Function Calltree (Vsim Performance Profiler)' Report
+===============================================================
+
+=======================================================
+=== '/Line Calltree (Vsim Performance Profiler)' Report
+=======================================================
+Source           | Local Hits | Scope Hits | Local Time (s) | Scope Time (s) | Local Percentage | Scope Percentage | File and Line                                                               | Region
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+start_item(req); |      1     |      1     |       0.10     |       0.10     |      100.00%     |      100.00%     | /home/habdel/viq/ethermac-2022.1/sim/../sv/wb_agent/wb_master_rw_seq.svh:47 | SystemVerilog
+
+
+===========================================================
+=== End '/Line Calltree (Vsim Performance Profiler)' Report
+===========================================================
+
+**************************************************
+*** End 'Vsim Performance Profiler' Session Report
+**************************************************
+
+#######################
+### End Profiler Report
+#######################

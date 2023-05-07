@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.multisimulationprofilinganalysisbackend.appuser.AppUser;
+
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -15,6 +17,7 @@ public interface ConfirmationTokenRepository
         extends JpaRepository<ConfirmationToken, Long> {
 
     Optional<ConfirmationToken> findByToken(String token);
+    Optional<ConfirmationToken> findByAppUser(AppUser user);
 
     @Transactional
     @Modifying

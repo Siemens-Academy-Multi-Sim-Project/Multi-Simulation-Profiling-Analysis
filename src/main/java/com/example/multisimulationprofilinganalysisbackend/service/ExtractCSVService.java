@@ -1,0 +1,140 @@
+package com.example.multisimulationprofilinganalysisbackend.service;
+
+import com.example.multisimulationprofilinganalysisbackend.dao.DesignUnitRepository;
+import com.example.multisimulationprofilinganalysisbackend.dao.ProfilingDataRepository;
+import com.example.multisimulationprofilinganalysisbackend.model.DesignUnit;
+import com.example.multisimulationprofilinganalysisbackend.model.ProfilingData;
+import com.example.multisimulationprofilinganalysisbackend.utils.csv.CSVParser;
+import com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders.SingleRowDataHolder;
+import com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders.TableDataHolder;
+import com.example.multisimulationprofilinganalysisbackend.utils.csv.properties.QuestaSimTableCsvProperty;
+import com.example.multisimulationprofilinganalysisbackend.utils.csv.properties.SingleRowCsvProperty;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+@Service
+public class ExtractCSVService {
+
+    private final ProfilingDataRepository profilingDataRepository;
+    private final DesignUnitRepository designUnitRepository;
+
+    public ExtractCSVService(ProfilingDataRepository profilingDataRepository, DesignUnitRepository designUnitRepository){
+        this.profilingDataRepository = profilingDataRepository;
+        this.designUnitRepository = designUnitRepository;
+    }
+
+
+    public void extractfile( MultipartFile file ,String filePath) throws Exception {
+        String VSIM_TIME = "Vsim Time";
+        String VOPT_TIME = "Vopt Time";
+        String VOPT_MEMORY = "Vopt Memory";
+        String VSIM_MEMORY = "Vsim Memory";
+        String VOPT_COMMAND_LINE = "Vopt Command Line";
+        String VSIM_COMMAND_LINE = "Vsim Command Line";
+        String METHODOLOGY = "Methodology";
+        String DESIGN_TYPE = "Design Type";
+        String DESIGN_COMPOSITION = "Design Composition";
+        String TOOL_VERSION = "Tool Version";
+        String PLATFORM = "Platform";
+        String DATE_OF_COLLECTION = "Date of Collection";
+        String TOTAL_WALL_TIME = "Total Wall Time";
+        String SOLVER_WALL_TIME = "Solver Wall Time";
+        String SOLVER_MEMORY = "Solver Memory";
+        String RANDOMIZE_CALLS = "Randomize Calls";
+
+        String DC_MODULES = "    Modules";
+        String DC_PACKAGES = "    Packages";
+        String DC_INTERFACES= "    Interfaces";
+        String DC_INSTANCES = "    Module Instances";
+
+        String DESIGN_UNIT = "'/Design Unit (Vsim Performance Profiler)' Report";
+
+        CSVParser parser = new CSVParser(
+                new SingleRowCsvProperty(VSIM_TIME, "|", ","),
+                new SingleRowCsvProperty(VOPT_TIME, "|", ","),
+                new SingleRowCsvProperty(VOPT_MEMORY, "|", ","),
+                new SingleRowCsvProperty(VSIM_MEMORY, "|", ","),
+                new SingleRowCsvProperty(VOPT_COMMAND_LINE, "|", ","),
+                new SingleRowCsvProperty(VSIM_COMMAND_LINE, "|", ","),
+                new SingleRowCsvProperty(METHODOLOGY, "|", ","),
+                new SingleRowCsvProperty(DESIGN_TYPE, "|", ","),
+                new SingleRowCsvProperty(DESIGN_COMPOSITION, "|", ","),
+                new SingleRowCsvProperty(TOOL_VERSION, "|", ","),
+                new SingleRowCsvProperty(PLATFORM, "|", ","),
+                new SingleRowCsvProperty(DATE_OF_COLLECTION, "|", ","),
+                new SingleRowCsvProperty(TOTAL_WALL_TIME, "|", ","),
+                new SingleRowCsvProperty(SOLVER_WALL_TIME, "|", ","),
+                new SingleRowCsvProperty(SOLVER_MEMORY, "|", ","),
+                new SingleRowCsvProperty(RANDOMIZE_CALLS, "|", ","),
+
+
+                new SingleRowCsvProperty(DC_MODULES, "|", ","),
+                new SingleRowCsvProperty(DC_PACKAGES, "|", ","),
+                new SingleRowCsvProperty(DC_INTERFACES, "|", ","),
+                new SingleRowCsvProperty(DC_INSTANCES, "|", ","),
+
+                new QuestaSimTableCsvProperty(DESIGN_UNIT, "|", ","));
+
+        String FileDstination = filePath;
+
+
+        parser.parseFile(FileDstination);
+        SingleRowDataHolder vsimTime = parser.getHolder(VSIM_TIME);
+        SingleRowDataHolder voptTime = parser.getHolder(VOPT_TIME);
+        SingleRowDataHolder vsimMemory = parser.getHolder(VSIM_MEMORY);
+        SingleRowDataHolder voptMemory = parser.getHolder(VOPT_MEMORY);
+        SingleRowDataHolder voptCommand=parser.getHolder(VOPT_COMMAND_LINE);
+        SingleRowDataHolder vsimCommand=parser.getHolder(VSIM_COMMAND_LINE);
+        SingleRowDataHolder methodology=parser.getHolder(METHODOLOGY);
+        SingleRowDataHolder designType=parser.getHolder(DESIGN_TYPE);
+        SingleRowDataHolder designComposition=parser.getHolder(DESIGN_COMPOSITION);
+        SingleRowDataHolder toolVersion=parser.getHolder(TOOL_VERSION);
+        SingleRowDataHolder platform=parser.getHolder(PLATFORM);
+        SingleRowDataHolder dateOfCollection=parser.getHolder(DATE_OF_COLLECTION);
+        SingleRowDataHolder totalWallTime=parser.getHolder(TOTAL_WALL_TIME);
+        SingleRowDataHolder solverWallTime=parser.getHolder(SOLVER_WALL_TIME);
+        SingleRowDataHolder solvermem=parser.getHolder(SOLVER_MEMORY);
+        SingleRowDataHolder randomizecall=parser.getHolder(RANDOMIZE_CALLS);
+        SingleRowDataHolder DC_modules=parser.getHolder(RANDOMIZE_CALLS);
+        SingleRowDataHolder DC_Packages=parser.getHolder(RANDOMIZE_CALLS);
+        SingleRowDataHolder DC_interface=parser.getHolder(RANDOMIZE_CALLS);
+        SingleRowDataHolder DC_inectance=parser.getHolder(RANDOMIZE_CALLS);
+
+
+        ProfilingData profilingData=new ProfilingData();
+        profilingData.setVsimTime(String.valueOf(vsimTime.value));
+        profilingData.setVoptTime(String.valueOf(voptTime.value));
+        profilingData.setVoptMemory(String.valueOf(voptMemory.value));
+        profilingData.setVsimMemory(String.valueOf(vsimMemory.value));
+        profilingData.setVoptCMDCommand(String.valueOf(voptCommand.value));
+        profilingData.setVsimCMDCommand(String.valueOf(vsimCommand.value));
+        profilingData.setMethodology(String.valueOf(methodology.value));
+        profilingData.setDesignType(String.valueOf(designType.value));
+        profilingData.setDesignCompositionName(String.valueOf(designComposition.value));
+        profilingData.setToolVersion(String.valueOf(toolVersion.value));
+        profilingData.setPlatform(String.valueOf(platform.value));
+        profilingData.setDateOfCollection(String.valueOf(dateOfCollection.value));
+        profilingData.setTotalWallTime(String.valueOf(totalWallTime.value));
+        profilingData.setSolverWallTime(String.valueOf(solverWallTime.value));
+        profilingData.setSolverMemory(String.valueOf(solvermem.value));
+        profilingData.setRandomizeCall(String.valueOf(randomizecall.value));
+        profilingData.setDesignCompositionModules(String.valueOf(DC_modules.value));
+        profilingData.setDesignCompositionPackages(String.valueOf(DC_Packages.value));
+        profilingData.setDesignCompositionInterfaces(String.valueOf(DC_interface.value));
+        profilingData.setDesignCompositionInstances(String.valueOf(DC_inectance.value));
+        profilingData.setFileName(file.getOriginalFilename());
+        profilingDataRepository.save(profilingData);
+
+        TableDataHolder designu = parser.getHolder(DESIGN_UNIT);
+        DesignUnit du=new DesignUnit();
+        for (int i = 0; i <designu.table.size() ; i++) {
+            du.setName(designu.table.get(i).get("Design Unit"));
+            du.setLocalHits(Integer.parseInt(designu.table.get(i).get("Local Hits")));
+            du.setLocalPercentage(designu.table.get(i).get("Local Percentage"));
+            System.out.println(profilingData.getId());
+            du.setProfilerId(profilingData.getId());
+        }
+        designUnitRepository.save(du);
+    }
+
+}

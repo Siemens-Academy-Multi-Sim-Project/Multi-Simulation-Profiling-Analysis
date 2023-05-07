@@ -12,5 +12,4 @@ public interface DesignUnitRepository extends JpaRepository<DesignUnit, Long> {
     @Query("SELECT i FROM DesignUnit i WHERE i.profilerId = :profilingDataId")
     List<DesignUnit> findAllDesignUnitsByProfilerID(@Param("profilingDataId") Long profilingDataId);
 
-
 }
