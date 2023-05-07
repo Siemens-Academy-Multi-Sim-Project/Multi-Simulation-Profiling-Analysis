@@ -1,15 +1,11 @@
 package com.example.multisimulationprofilinganalysisbackend.dao;
 
-import com.example.multisimulationprofilinganalysisbackend.model.DesignUnit;
-import com.example.multisimulationprofilinganalysisbackend.model.ProfilingData;
 import com.example.multisimulationprofilinganalysisbackend.model.profilingDataClusters;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface ProfilingDataClustersRepository extends JpaRepository<profilingDataClusters, Long> {
@@ -23,8 +19,9 @@ public interface ProfilingDataClustersRepository extends JpaRepository<profiling
     @Query(value = "SELECT id FROM profilingdataclusters where clustername = :clusterName", nativeQuery = true)
     Long getClusterId(@Param("clusterName") String clusterName);
 
+
     @Query(value = "SELECT * FROM profilingdataclusters WHERE profilingdataclusters.id = :clusterId", nativeQuery = true)
-    profilingDataClusters getByClusterName(@Param("clusterId") Long clusterID);
+    profilingDataClusters getClusterByID(@Param("clusterId") Long clusterID);
 
 
     profilingDataClusters getById(Long clusterID);
