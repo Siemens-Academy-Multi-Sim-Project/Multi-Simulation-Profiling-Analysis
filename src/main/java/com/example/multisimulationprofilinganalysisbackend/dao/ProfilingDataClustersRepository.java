@@ -24,7 +24,7 @@ public interface ProfilingDataClustersRepository extends JpaRepository<profiling
     Long getClusterId(@Param("clusterName") String clusterName);
 
     @Query(value = "SELECT * FROM profilingdataclusters WHERE profilingdataclusters.id = :clusterId", nativeQuery = true)
-    List<profilingDataClusters> getByClusterName(@Param("clusterId") Long clusterID);
+    profilingDataClusters getByClusterName(@Param("clusterId") Long clusterID);
 
 
     profilingDataClusters getById(Long clusterID);

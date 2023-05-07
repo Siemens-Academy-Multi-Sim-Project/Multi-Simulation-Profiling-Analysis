@@ -28,7 +28,7 @@ public class FileUploadController {
     }
 
     @PostMapping("/UploadCSV")
-    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) throws Exception {
+    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file ,String ClusterName) throws Exception {
 
         String uploadsDir = "/";
         String realPathtoUploads = request.getServletContext().getRealPath(uploadsDir);
@@ -40,7 +40,7 @@ public class FileUploadController {
         File dest = new File(filePath);
         file.transferTo(dest);
 
-        extractCSVService.extractfile(file, filePath);
+        extractCSVService.extractfile(file, filePath,ClusterName);
         dest.delete();
         HttpHeaders header = new HttpHeaders();
         header.set("Message", "file uploaded successfully");

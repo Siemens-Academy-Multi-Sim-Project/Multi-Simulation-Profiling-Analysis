@@ -1,9 +1,11 @@
 package com.example.multisimulationprofilinganalysisbackend.service;
 
 import com.example.multisimulationprofilinganalysisbackend.dao.DesignUnitRepository;
+import com.example.multisimulationprofilinganalysisbackend.dao.ProfilingDataClustersRepository;
 import com.example.multisimulationprofilinganalysisbackend.dao.ProfilingDataRepository;
 import com.example.multisimulationprofilinganalysisbackend.model.DesignUnit;
 import com.example.multisimulationprofilinganalysisbackend.model.ProfilingData;
+import com.example.multisimulationprofilinganalysisbackend.model.profilingDataClusters;
 import com.example.multisimulationprofilinganalysisbackend.utils.csv.CSVParser;
 import com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders.SingleRowDataHolder;
 import com.example.multisimulationprofilinganalysisbackend.utils.csv.dataholders.TableDataHolder;
@@ -14,17 +16,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ExtractCSVService {
-
     private final ProfilingDataRepository profilingDataRepository;
     private final DesignUnitRepository designUnitRepository;
-
-    public ExtractCSVService(ProfilingDataRepository profilingDataRepository, DesignUnitRepository designUnitRepository){
+    private final ProfilingDataClustersRepository profilingDataClustersRepository;
+    public ExtractCSVService(ProfilingDataRepository profilingDataRepository, DesignUnitRepository designUnitRepository, ProfilingDataClustersRepository profilingDataClustersRepository){
         this.profilingDataRepository = profilingDataRepository;
         this.designUnitRepository = designUnitRepository;
+        this.profilingDataClustersRepository = profilingDataClustersRepository;
     }
 
-
-    public void extractfile( MultipartFile file ,String filePath) throws Exception {
+    public void extractfile( MultipartFile file ,String filePath ,String ClusterName) throws Exception {
         String VSIM_TIME = "Vsim Time";
         String VOPT_TIME = "Vopt Time";
         String VOPT_MEMORY = "Vopt Memory";
@@ -123,15 +124,26 @@ public class ExtractCSVService {
         profilingData.setDesignCompositionInterfaces(String.valueOf(DC_interface.value));
         profilingData.setDesignCompositionInstances(String.valueOf(DC_inectance.value));
         profilingData.setFileName(file.getOriginalFilename());
-        profilingDataRepository.save(profilingData);
+        profilingDataClusters profilingDataCluster;
 
+        Long ClusterID=profilingDataClustersRepository.getClusterId(ClusterName);
+        if(ClusterID!=null){
+            profilingDataCluster= profilingDataClustersRepository.getByClusterName(ClusterID);
+            profilingData.setProfilingDataCluster(profilingDataCluster);
+        }else {
+            profilingDataCluster =new profilingDataClusters();
+            profilingDataCluster.setClusterName(ClusterName);
+            profilingData.setProfilingDataCluster(profilingDataCluster);
+            profilingDataClustersRepository.save(profilingDataCluster);
+        }
+        
+        profilingDataRepository.save(profilingData);
         TableDataHolder designu = parser.getHolder(DESIGN_UNIT);
         DesignUnit du=new DesignUnit();
         for (int i = 0; i <designu.table.size() ; i++) {
             du.setName(designu.table.get(i).get("Design Unit"));
             du.setLocalHits(Integer.parseInt(designu.table.get(i).get("Local Hits")));
             du.setLocalPercentage(designu.table.get(i).get("Local Percentage"));
-            System.out.println(profilingData.getId());
             du.setProfilerId(profilingData.getId());
         }
         designUnitRepository.save(du);
