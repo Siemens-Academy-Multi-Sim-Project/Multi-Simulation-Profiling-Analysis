@@ -128,7 +128,7 @@ public class ExtractCSVService {
 
         Long ClusterID=profilingDataClustersRepository.getClusterId(ClusterName);
         if(ClusterID!=null){
-            profilingDataCluster= profilingDataClustersRepository.getByClusterName(ClusterID);
+            profilingDataCluster= profilingDataClustersRepository.getClusterByID(ClusterID);
             profilingData.setProfilingDataCluster(profilingDataCluster);
         }else {
             profilingDataCluster =new profilingDataClusters();

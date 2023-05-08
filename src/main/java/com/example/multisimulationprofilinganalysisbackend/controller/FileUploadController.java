@@ -4,10 +4,7 @@ import com.example.multisimulationprofilinganalysisbackend.service.ExtractCSVSer
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +25,7 @@ public class FileUploadController {
     }
 
     @PostMapping("/UploadCSV")
-    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file ,String ClusterName) throws Exception {
+    public ResponseEntity<String> handleFileUpload(@RequestPart("file") MultipartFile file, String ClusterName) throws Exception {
 
         String uploadsDir = "/";
         String realPathtoUploads = request.getServletContext().getRealPath(uploadsDir);
@@ -40,10 +37,17 @@ public class FileUploadController {
         File dest = new File(filePath);
         file.transferTo(dest);
 
-        extractCSVService.extractfile(file, filePath,ClusterName);
-        dest.delete();
-        HttpHeaders header = new HttpHeaders();
-        header.set("Message", "file uploaded successfully");
-        return new ResponseEntity<String>(header, org.springframework.http.HttpStatus.OK);
+        try {
+            extractCSVService.extractfile(file, filePath, ClusterName);
+            dest.delete();
+            HttpHeaders header = new HttpHeaders();
+            header.set("Message", "file uploaded successfully");
+            return new ResponseEntity<String>(header, org.springframework.http.HttpStatus.OK);
+        } catch (Exception e) {
+            dest.delete();
+            HttpHeaders header = new HttpHeaders();
+            header.set("Message", e.getMessage());
+            return new ResponseEntity<String>("Error While parsing File !", org.springframework.http.HttpStatus.BAD_REQUEST);
+        }
     }
 }
