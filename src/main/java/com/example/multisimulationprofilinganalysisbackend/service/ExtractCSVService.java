@@ -42,6 +42,7 @@ public class ExtractCSVService {
         String SOLVER_WALL_TIME = "Solver Wall Time";
         String SOLVER_MEMORY = "Solver Memory";
         String RANDOMIZE_CALLS = "Randomize Calls";
+        String TOTAL_SAMPLES = "Total Samples";
 
         String DC_MODULES = "    Modules";
         String DC_PACKAGES = "    Packages";
@@ -67,6 +68,7 @@ public class ExtractCSVService {
                 new SingleRowCsvProperty(SOLVER_WALL_TIME, "|", ","),
                 new SingleRowCsvProperty(SOLVER_MEMORY, "|", ","),
                 new SingleRowCsvProperty(RANDOMIZE_CALLS, "|", ","),
+                new SingleRowCsvProperty(TOTAL_SAMPLES, "|", ","),
 
 
                 new SingleRowCsvProperty(DC_MODULES, "|", ","),
@@ -96,6 +98,7 @@ public class ExtractCSVService {
         SingleRowDataHolder solverWallTime=parser.getHolder(SOLVER_WALL_TIME);
         SingleRowDataHolder solvermem=parser.getHolder(SOLVER_MEMORY);
         SingleRowDataHolder randomizecall=parser.getHolder(RANDOMIZE_CALLS);
+        SingleRowDataHolder totalsamples=parser.getHolder(TOTAL_SAMPLES);
         SingleRowDataHolder DC_modules=parser.getHolder(DC_MODULES);
         SingleRowDataHolder DC_Packages=parser.getHolder(DC_PACKAGES);
         SingleRowDataHolder DC_interface=parser.getHolder(DC_INTERFACES);
@@ -123,6 +126,7 @@ public class ExtractCSVService {
         profilingData.setDesignCompositionPackages(String.valueOf(DC_Packages.value));
         profilingData.setDesignCompositionInterfaces(String.valueOf(DC_interface.value));
         profilingData.setDesignCompositionInstances(String.valueOf(DC_inectance.value));
+        profilingData.setTotalSamples(Integer.parseInt(totalsamples.value));
         profilingData.setFileName(file.getOriginalFilename());
         profilingDataClusters profilingDataCluster;
 
