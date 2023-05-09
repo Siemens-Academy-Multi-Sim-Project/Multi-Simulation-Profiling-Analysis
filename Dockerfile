@@ -2,10 +2,15 @@ FROM eclipse-temurin:17
 
 WORKDIR /app
 
-COPY . .
+VOLUME /app
 
 EXPOSE 8080
 
-CMD ["./gradlew clean build"]
+# RUN ["./gradlew", "clean", "build", "-x", "test"]
+# COPY /build/libs/Multi-Simulation-Profiling-Analysis-0.0.1-SNAPSHOT.war backend.war
+# RUN apt-get update && apt-get install -y --no-install-recommends \
+#   && apt-get install -y maildev 
 
-ENTRYPOINT ["java", "-jar", "app.war"]
+CMD ["chmod" "+x" "./entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
+CMD ["java", "-jar", "backend.war"]
