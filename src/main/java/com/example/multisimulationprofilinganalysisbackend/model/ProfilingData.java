@@ -21,6 +21,12 @@ public class ProfilingData {
 
 
 
+    @Column(name = "TotalSamples ")
+    @NotNull
+    private int TotalSamples;
+
+
+
     @Column(name = "FileName",length = 10000)
     @NotNull
     private String FileName;
@@ -110,6 +116,15 @@ public class ProfilingData {
     @OneToOne
     @JoinColumn(name="ProfilingDataClusterID", referencedColumnName = "id")
     private profilingDataClusters profilingDataCluster;
+
+
+    public int getTotalSamples() {
+        return TotalSamples;
+    }
+
+    public void setTotalSamples(int totalSamples) {
+        TotalSamples = totalSamples;
+    }
 
     public Long getId() {
         return id;
