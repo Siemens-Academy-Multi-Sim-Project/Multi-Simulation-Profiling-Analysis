@@ -29,16 +29,16 @@ public class ProfilingDataController {
     }
 
     @PostMapping("profiling-data/create-cluster")
-    public ResponseEntity<String> createCluster(@RequestBody CreateClusterDTO dto) {
+    public ResponseEntity<Long> createCluster(@RequestBody CreateClusterDTO dto) {
         String name = dto.clusterName;
         var clusterId = profilingDataClustersRepository.getClusterId(name);
         if (clusterId != null) {
-            return ResponseEntity.ok(name);
+            return ResponseEntity.ok(clusterId);
         }
         var newCluster = new profilingDataClusters();
         newCluster.setClusterName(name);
-        profilingDataClustersRepository.save(newCluster);
-        return ResponseEntity.ok(name);
+        newCluster = profilingDataClustersRepository.save(newCluster);
+        return ResponseEntity.ok(newCluster.getId());
     }
 
     @PostMapping("profiling-data/add")
