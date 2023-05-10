@@ -57,13 +57,17 @@ public class CSVParser {
                         continue;
                     }
 
-                    List<String> foundLines = property.findProperty(fileReader); // pass fileReader to property to start
+                    List<String> foundLines = property.findProperty(line, fileReader); // pass fileReader to property to start
                                                                                  // the search
                     if (!foundLines.isEmpty()) {
                         var parsedProperty = property.parseProperty(foundLines);
                         this.parsedProperties.put(property.getPropertyName(), parsedProperty);
                     }
-                    fileReader.reset();
+                    try {
+                        fileReader.reset();
+                    } catch (Exception e) {
+                        System.out.println("WARNING: MARK INVALIDATATED");
+                    }
                 }
             }
 
@@ -106,6 +110,11 @@ public class CSVParser {
         String SOLVER_MEMORY = "Solver Memory";
         String RANDOMIZE_CALLS = "Randomize Calls";
 
+        String DC_MODULES = "Modules";
+        String DC_PACKAGES = "Packages";
+        String DC_INTERFACES = "Interfaces";
+        String DC_INSTANCES = "Module Instances";
+
         String DESIGN_UNIT = "'/Design Unit (Vsim Performance Profiler)' Report";
         CSVParser parser = new CSVParser(
             new SingleRowCsvProperty(VSIM_TIME, "|", ","),
@@ -124,10 +133,15 @@ public class CSVParser {
             new SingleRowCsvProperty(SOLVER_WALL_TIME, "|", ","),
             new SingleRowCsvProperty(SOLVER_MEMORY, "|", ","),
             new SingleRowCsvProperty(RANDOMIZE_CALLS, "|", ","),
-            new QuestaSimTableCsvProperty(DESIGN_UNIT, "|", ","));
+            new QuestaSimTableCsvProperty(DESIGN_UNIT, "|", ","),
+            new SingleRowCsvProperty(DC_MODULES, "|", ","),
+            new SingleRowCsvProperty(DC_PACKAGES, "|", ","),
+            new SingleRowCsvProperty(DC_INTERFACES, "|", ","),
+            new SingleRowCsvProperty(DC_INSTANCES, "|", ",")
+        );
 
         String[] files = {
-                "ethmac_3997.csv",
+                "Document.csv",
         };
 
         for (String file : files) {
@@ -194,15 +208,36 @@ public class CSVParser {
             System.out.println(randomizecall.propertyName + ": " + randomizecall.value);
             System.out.println("---------------------------------------------");
 
-            TableDataHolder du = parser.getHolder(DESIGN_UNIT);
-            System.out.println(du);
+            SingleRowDataHolder modules = parser.getHolder(DC_MODULES);
+            System.out.println(modules.propertyName + ": " + modules.value);
             System.out.println("---------------------------------------------");
 
-            for (int i = 0; i <du.table.size() ; i++) {
-                  System.out.println(du.table.get(i).get("Design Unit"));
-                System.out.println(du.table.get(i).get("Local Hits"));
-                System.out.println(du.table.get(i).get("Local Percentage"));
-            }
+            
+            SingleRowDataHolder interfaces = parser.getHolder(DC_INTERFACES);
+            System.out.println(interfaces.propertyName + ": " + interfaces.value);
+            System.out.println("---------------------------------------------");
+
+            
+            SingleRowDataHolder isntances = parser.getHolder(DC_INSTANCES);
+            System.out.println(isntances.propertyName + ": " + isntances.value);
+            System.out.println("---------------------------------------------");
+
+            
+            SingleRowDataHolder packages = parser.getHolder(DC_PACKAGES);
+            System.out.println(packages.propertyName + ": " + packages.value);
+            System.out.println("---------------------------------------------");
+
+            
+
+            // TableDataHolder du = parser.getHolder(DESIGN_UNIT);
+            // System.out.println(du);
+            // System.out.println("---------------------------------------------");
+
+            // for (int i = 0; i <du.table.size() ; i++) {
+            //       System.out.println(du.table.get(i).get("Design Unit"));
+            //     System.out.println(du.table.get(i).get("Local Hits"));
+            //     System.out.println(du.table.get(i).get("Local Percentage"));
+            // }
         }
 
     }

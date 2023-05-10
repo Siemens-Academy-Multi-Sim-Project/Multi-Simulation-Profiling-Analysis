@@ -9,21 +9,16 @@ public class StringUtils {
         return str.toLowerCase().contains(substr.toLowerCase());
     }
 
-    private static Boolean isIgnored(char c, boolean ignoreWhiteSpace){ 
-        return 
-        (Character.isWhitespace(c) && ignoreWhiteSpace)
-            || c == '"';
-    }
 
     public static String trim(String in, boolean ignoreWhiteSpace){
         StringBuilder returnStr = new StringBuilder("");
         for(int i = 0; i < in.length(); i++){
-            if(isIgnored(in.charAt(i), ignoreWhiteSpace)) continue;
+            if(in.charAt(i) == '"') continue;
             
             returnStr.append(in.charAt(i));
         }
 
-        return returnStr.toString();
+        return returnStr.toString().trim();
     }
 
     public static String[] trim(String[] arr, boolean ignoreWhiteSpace){

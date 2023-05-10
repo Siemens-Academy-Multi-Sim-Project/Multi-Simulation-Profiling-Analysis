@@ -50,10 +50,10 @@ public class QuestaSimTableCsvProperty extends CsvProperty<TableDataHolder> {
     }
 
     @Override
-    public List<String> findProperty(BufferedReader reader) throws IOException {
+    public List<String> findProperty(String currentLine, BufferedReader reader) throws IOException {
         var foundLines = new ArrayList<String>();
-        String line = reader.readLine();
-        if (line != null && StringUtils.containsIgnoreCase(line, propertyName)) {
+        String line = currentLine;
+        if (line != null && line.contains(propertyName)) {
             reader.readLine(); //skip lower delimiter row
             line = reader.readLine(); //read table header
             foundLines.add(line);
