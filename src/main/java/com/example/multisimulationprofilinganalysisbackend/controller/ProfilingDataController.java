@@ -55,8 +55,8 @@ public class ProfilingDataController {
         return ResponseEntity.ok(res);
     }
 
-    @GetMapping("profiling-data-clusters/getDesignsNumber")
-    public ResponseEntity<String> getProfilingDataClusterDesignNumber(@RequestBody Long clusterID) {
+    @GetMapping("profiling-data-clusters/getDesignsNumber/{clusterID}")
+    public ResponseEntity<String> getProfilingDataClusterDesignNumber(@PathVariable Long clusterID) {
         String res = profilingDataClustersRepository.getDesignsNumber(clusterID);
         return ResponseEntity.ok(res);
     }
@@ -88,6 +88,7 @@ public class ProfilingDataController {
         profilingDataClusters res = profilingDataClustersRepository.getById(clusterId);
         return ResponseEntity.ok(res);
     }
+
     @GetMapping("profiling-data-clusters/all")
     public ResponseEntity<List<profilingDataClusters>> getAllProfilingDataClusters() {
         List<profilingDataClusters> res = profilingDataClustersRepository.findAll();
