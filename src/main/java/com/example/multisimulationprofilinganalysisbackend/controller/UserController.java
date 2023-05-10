@@ -3,6 +3,8 @@ package com.example.multisimulationprofilinganalysisbackend.controller;
 import com.example.multisimulationprofilinganalysisbackend.appuser.AppUser;
 import com.example.multisimulationprofilinganalysisbackend.appuser.AppUserRepository;
 import com.example.multisimulationprofilinganalysisbackend.appuser.AppUserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,9 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     AppUserService appUserService;
     @GetMapping("/")
-  public String getLogedInUser(){
+  public ResponseEntity<String> getLogedInUser(){
         String email;
-        String firstname;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             email = ((UserDetails)principal).getUsername();
@@ -26,6 +27,7 @@ public class UserController {
             email = principal.toString();
         }
 
-      return email;
+        String message = "The current logged in user is: "+email;
+        return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 }

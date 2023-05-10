@@ -9,9 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-
 @RestController
 public class FileUploadController {
     @Autowired
