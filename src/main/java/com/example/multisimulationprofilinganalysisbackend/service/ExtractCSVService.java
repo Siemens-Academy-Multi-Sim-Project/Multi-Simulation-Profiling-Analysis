@@ -14,18 +14,21 @@ import com.example.multisimulationprofilinganalysisbackend.utils.csv.properties.
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Objects;
+
 @Service
 public class ExtractCSVService {
     private final ProfilingDataRepository profilingDataRepository;
     private final DesignUnitRepository designUnitRepository;
     private final ProfilingDataClustersRepository profilingDataClustersRepository;
-    public ExtractCSVService(ProfilingDataRepository profilingDataRepository, DesignUnitRepository designUnitRepository, ProfilingDataClustersRepository profilingDataClustersRepository){
+
+    public ExtractCSVService(ProfilingDataRepository profilingDataRepository, DesignUnitRepository designUnitRepository, ProfilingDataClustersRepository profilingDataClustersRepository) {
         this.profilingDataRepository = profilingDataRepository;
         this.designUnitRepository = designUnitRepository;
         this.profilingDataClustersRepository = profilingDataClustersRepository;
     }
 
-    public void extractfile( MultipartFile file ,String filePath ,String ClusterName) throws Exception {
+    public void extractfile(MultipartFile file, String filePath, String ClusterName) throws Exception {
         String VSIM_TIME = "Vsim Time";
         String VOPT_TIME = "Vopt Time";
         String VOPT_MEMORY = "Vopt Memory";
@@ -46,7 +49,7 @@ public class ExtractCSVService {
 
         String DC_MODULES = "    Modules";
         String DC_PACKAGES = "    Packages";
-        String DC_INTERFACES= "    Interfaces";
+        String DC_INTERFACES = "    Interfaces";
         String DC_INSTANCES = "    Module Instances";
 
         String DESIGN_UNIT = "'/Design Unit (Vsim Performance Profiler)' Report";
@@ -86,26 +89,26 @@ public class ExtractCSVService {
         SingleRowDataHolder voptTime = parser.getHolder(VOPT_TIME);
         SingleRowDataHolder vsimMemory = parser.getHolder(VSIM_MEMORY);
         SingleRowDataHolder voptMemory = parser.getHolder(VOPT_MEMORY);
-        SingleRowDataHolder voptCommand=parser.getHolder(VOPT_COMMAND_LINE);
-        SingleRowDataHolder vsimCommand=parser.getHolder(VSIM_COMMAND_LINE);
-        SingleRowDataHolder methodology=parser.getHolder(METHODOLOGY);
-        SingleRowDataHolder designType=parser.getHolder(DESIGN_TYPE);
-        SingleRowDataHolder designComposition=parser.getHolder(DESIGN_COMPOSITION);
-        SingleRowDataHolder toolVersion=parser.getHolder(TOOL_VERSION);
-        SingleRowDataHolder platform=parser.getHolder(PLATFORM);
-        SingleRowDataHolder dateOfCollection=parser.getHolder(DATE_OF_COLLECTION);
-        SingleRowDataHolder totalWallTime=parser.getHolder(TOTAL_WALL_TIME);
-        SingleRowDataHolder solverWallTime=parser.getHolder(SOLVER_WALL_TIME);
-        SingleRowDataHolder solvermem=parser.getHolder(SOLVER_MEMORY);
-        SingleRowDataHolder randomizecall=parser.getHolder(RANDOMIZE_CALLS);
-        SingleRowDataHolder totalsamples=parser.getHolder(TOTAL_SAMPLES);
-        SingleRowDataHolder DC_modules=parser.getHolder(DC_MODULES);
-        SingleRowDataHolder DC_Packages=parser.getHolder(DC_PACKAGES);
-        SingleRowDataHolder DC_interface=parser.getHolder(DC_INTERFACES);
-        SingleRowDataHolder DC_inectance=parser.getHolder(DC_INSTANCES);
+        SingleRowDataHolder voptCommand = parser.getHolder(VOPT_COMMAND_LINE);
+        SingleRowDataHolder vsimCommand = parser.getHolder(VSIM_COMMAND_LINE);
+        SingleRowDataHolder methodology = parser.getHolder(METHODOLOGY);
+        SingleRowDataHolder designType = parser.getHolder(DESIGN_TYPE);
+        SingleRowDataHolder designComposition = parser.getHolder(DESIGN_COMPOSITION);
+        SingleRowDataHolder toolVersion = parser.getHolder(TOOL_VERSION);
+        SingleRowDataHolder platform = parser.getHolder(PLATFORM);
+        SingleRowDataHolder dateOfCollection = parser.getHolder(DATE_OF_COLLECTION);
+        SingleRowDataHolder totalWallTime = parser.getHolder(TOTAL_WALL_TIME);
+        SingleRowDataHolder solverWallTime = parser.getHolder(SOLVER_WALL_TIME);
+        SingleRowDataHolder solvermem = parser.getHolder(SOLVER_MEMORY);
+        SingleRowDataHolder randomizecall = parser.getHolder(RANDOMIZE_CALLS);
+        SingleRowDataHolder totalsamples = parser.getHolder(TOTAL_SAMPLES);
+        SingleRowDataHolder DC_modules = parser.getHolder(DC_MODULES);
+        SingleRowDataHolder DC_Packages = parser.getHolder(DC_PACKAGES);
+        SingleRowDataHolder DC_interface = parser.getHolder(DC_INTERFACES);
+        SingleRowDataHolder DC_inectance = parser.getHolder(DC_INSTANCES);
 
 
-        ProfilingData profilingData=new ProfilingData();
+        ProfilingData profilingData = new ProfilingData();
         profilingData.setVsimTime(String.valueOf(vsimTime.value));
         profilingData.setVoptTime(String.valueOf(voptTime.value));
         profilingData.setVoptMemory(String.valueOf(voptMemory.value));
@@ -126,27 +129,39 @@ public class ExtractCSVService {
         profilingData.setDesignCompositionPackages(String.valueOf(DC_Packages.value));
         profilingData.setDesignCompositionInterfaces(String.valueOf(DC_interface.value));
         profilingData.setDesignCompositionInstances(String.valueOf(DC_inectance.value));
+        if (Objects.equals(totalsamples.value, "")) {
+            totalsamples.value = "0";
+        }
         profilingData.setTotalSamples(Integer.parseInt(totalsamples.value));
         profilingData.setFileName(file.getOriginalFilename());
         profilingDataClusters profilingDataCluster;
 
-        Long ClusterID=profilingDataClustersRepository.getClusterId(ClusterName);
-        if(ClusterID!=null){
-            profilingDataCluster= profilingDataClustersRepository.getClusterByID(ClusterID);
+        Long ClusterID = profilingDataClustersRepository.getClusterId(ClusterName);
+        if (ClusterID != null) {
+            profilingDataCluster = profilingDataClustersRepository.getClusterByID(ClusterID);
             profilingData.setProfilingDataCluster(profilingDataCluster);
-        }else {
-            profilingDataCluster =new profilingDataClusters();
+        } else {
+            profilingDataCluster = new profilingDataClusters();
             profilingDataCluster.setClusterName(ClusterName);
             profilingData.setProfilingDataCluster(profilingDataCluster);
             profilingDataClustersRepository.save(profilingDataCluster);
         }
-        
+
         profilingDataRepository.save(profilingData);
         TableDataHolder designu = parser.getHolder(DESIGN_UNIT);
-        DesignUnit du=new DesignUnit();
-        for (int i = 0; i <designu.table.size() ; i++) {
+        if (designu.table.size() == 0) {
+            return;
+        }
+        DesignUnit du = new DesignUnit();
+        for (int i = 0; i < designu.table.size(); i++) {
             du.setName(designu.table.get(i).get("Design Unit"));
+            if (Objects.equals(designu.table.get(i).get("Local Hits"), "")) {
+                designu.table.get(i).put("Local Hits", "0");
+            }
             du.setLocalHits(Integer.parseInt(designu.table.get(i).get("Local Hits")));
+            if (Objects.equals(designu.table.get(i).get("Local Percentage"), "")) {
+                designu.table.get(i).put("Local Percentage", "0");
+            }
             du.setLocalPercentage(designu.table.get(i).get("Local Percentage"));
             du.setProfilerId(profilingData.getId());
         }
