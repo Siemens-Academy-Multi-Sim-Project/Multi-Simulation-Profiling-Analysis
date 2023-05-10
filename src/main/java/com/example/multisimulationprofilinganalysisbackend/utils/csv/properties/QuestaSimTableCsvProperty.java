@@ -39,10 +39,10 @@ public class QuestaSimTableCsvProperty extends CsvProperty<TableDataHolder> {
     public TableDataHolder parseProperty(List<String> foundLines) throws DelimiterException, IOException {
         var usedDelimiter = findDelimiter(foundLines.get(0));
         String headerLine = foundLines.get(0);
-        String[] trimmedHeaders = StringUtils.splitAndTrim(headerLine, usedDelimiter);
+        String[] trimmedHeaders = StringUtils.splitAndTrim(headerLine, usedDelimiter, false);
         for(int i = 1; i < foundLines.size(); i++){
             String rowLine = foundLines.get(i);
-            String[] trimmedRow = StringUtils.splitAndTrim(rowLine, usedDelimiter);
+            String[] trimmedRow = StringUtils.splitAndTrim(rowLine, usedDelimiter, true);
             dataHolder.insertRow(trimmedHeaders, trimmedRow);
         }
         setParsed(true);

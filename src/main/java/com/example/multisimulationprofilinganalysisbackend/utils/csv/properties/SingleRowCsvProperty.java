@@ -39,7 +39,7 @@ public class SingleRowCsvProperty extends CsvProperty<SingleRowDataHolder> {
         String line = foundLines.get(0);
         var lineDelimiter = findDelimiter(line);
         String[] splittedLine = line.split( Pattern.quote(lineDelimiter) );
-        String[] trimmedLine = StringUtils.trim(splittedLine);
+        String[] trimmedLine = StringUtils.trim(splittedLine, true);
 
         dataHolder.value = trimmedLine[1];
         setParsed(true);
