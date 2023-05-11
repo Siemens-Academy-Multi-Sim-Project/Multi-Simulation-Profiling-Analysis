@@ -152,8 +152,8 @@ public class ExtractCSVService {
         if (designu.table.size() == 0) {
             return;
         }
-        DesignUnit du = new DesignUnit();
         for (int i = 0; i < designu.table.size(); i++) {
+            DesignUnit du = new DesignUnit();
             String du_name = designu.table.get(i).get("Design Unit");
             du.setName(du_name);
             String localHits = designu.table.get(i).get("Local Hits");
@@ -169,8 +169,8 @@ public class ExtractCSVService {
             }
             du.setLocalPercentage(localPercentage);
             du.setProfilerId(profilingData.getId());
+            designUnitRepository.save(du);
         }
-        designUnitRepository.save(du);
     }
 
 }
