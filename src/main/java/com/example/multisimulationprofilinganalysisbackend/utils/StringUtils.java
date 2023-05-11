@@ -10,7 +10,7 @@ public class StringUtils {
     }
 
 
-    public static String trim(String in, boolean ignoreWhiteSpace){
+    public static String trim(String in){
         StringBuilder returnStr = new StringBuilder("");
         for(int i = 0; i < in.length(); i++){
             if(in.charAt(i) == '"') continue;
@@ -21,16 +21,16 @@ public class StringUtils {
         return returnStr.toString().trim();
     }
 
-    public static String[] trim(String[] arr, boolean ignoreWhiteSpace){
+    public static String[] trim(String[] arr){
         ArrayList<String> trimmedArr = new ArrayList<>();
         for(int i = 0; i < arr.length; i++){
             if(arr[i].isEmpty() || arr[i].isBlank()) continue;
-            trimmedArr.add(trim(arr[i], ignoreWhiteSpace));
+            trimmedArr.add(trim(arr[i]));
         }
         return trimmedArr.toArray(new String[0]);
     }
 
-    public static String[] splitAndTrim(String line, String delimiter, boolean ignoreWhiteSpace){
-        return trim(line.split(Pattern.quote(delimiter)), ignoreWhiteSpace);
+    public static String[] splitAndTrim(String line, String delimiter){
+        return trim(line.split(Pattern.quote(delimiter)));
     }
 }
