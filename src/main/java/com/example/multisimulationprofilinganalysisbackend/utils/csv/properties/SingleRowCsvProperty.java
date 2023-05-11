@@ -39,7 +39,7 @@ public class SingleRowCsvProperty extends CsvProperty<SingleRowDataHolder> {
         String line = foundLines.get(0);
         var lineDelimiter = findDelimiter(line);
         String[] splittedLine = line.split( Pattern.quote(lineDelimiter) );
-        String[] trimmedLine = StringUtils.trim(splittedLine);
+        String[] trimmedLine = StringUtils.trim(splittedLine, true);
 
         dataHolder.value = trimmedLine[1];
         setParsed(true);
@@ -52,11 +52,10 @@ public class SingleRowCsvProperty extends CsvProperty<SingleRowDataHolder> {
      * @return List of lines that contain the desired property
      */
     @Override
-    public List<String> findProperty(BufferedReader reader) throws IOException {
+    public List<String> findProperty(String currentLine, BufferedReader reader) throws IOException {
         var foundLines = new ArrayList<String>();
-        String line = reader.readLine();
-        if (line != null && StringUtils.containsIgnoreCase(line, propertyName)) {
-            foundLines.add(line);
+        if (currentLine != null && currentLine.contains(propertyName)) {
+            foundLines.add(currentLine);
         }
         return foundLines;
     }

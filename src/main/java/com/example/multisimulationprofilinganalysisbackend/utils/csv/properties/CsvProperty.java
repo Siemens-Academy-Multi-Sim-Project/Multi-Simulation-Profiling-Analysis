@@ -71,7 +71,7 @@ public abstract class CsvProperty <DATA_HOLDER_TYPE extends BaseDataHolder> {
      * @return A list of the lines that fits the defined critera in the concrete impl
      * @throws IOException
      */
-    public abstract List<String> findProperty(BufferedReader csvFile) throws IOException;
+    public abstract List<String> findProperty(String currentLine, BufferedReader csvFile) throws IOException;
 
     /**
      * A helper function that finds the delimiter currently being used by the line. 

@@ -47,10 +47,10 @@ public class ExtractCSVService {
         String RANDOMIZE_CALLS = "Randomize Calls";
         String TOTAL_SAMPLES = "Total Samples";
 
-        String DC_MODULES = "    Modules";
-        String DC_PACKAGES = "    Packages";
-        String DC_INTERFACES = "    Interfaces";
-        String DC_INSTANCES = "    Module Instances";
+        String DC_MODULES = "Modules";
+        String DC_PACKAGES = "Packages";
+        String DC_INTERFACES = "Interfaces";
+        String DC_INSTANCES = "Module Instances";
 
         String DESIGN_UNIT = "'/Design Unit (Vsim Performance Profiler)' Report";
 
@@ -152,20 +152,25 @@ public class ExtractCSVService {
         if (designu.table.size() == 0) {
             return;
         }
-        DesignUnit du = new DesignUnit();
         for (int i = 0; i < designu.table.size(); i++) {
-            du.setName(designu.table.get(i).get("Design Unit"));
-            if (Objects.equals(designu.table.get(i).get("Local Hits"), "")) {
-                designu.table.get(i).put("Local Hits", "0");
+            DesignUnit du = new DesignUnit();
+            String du_name = designu.table.get(i).get("Design Unit");
+            du.setName(du_name);
+            String localHits = designu.table.get(i).get("Local Hits");
+
+            if (localHits.equals("")) {
+                localHits = "0";
             }
-            du.setLocalHits(Integer.parseInt(designu.table.get(i).get("Local Hits")));
-            if (Objects.equals(designu.table.get(i).get("Local Percentage"), "")) {
-                designu.table.get(i).put("Local Percentage", "0");
+
+            du.setLocalHits(Integer.parseInt(localHits));
+            String localPercentage = designu.table.get(i).get("Local Percentage");
+            if (localPercentage.equals("")) {
+                localPercentage = "0";
             }
-            du.setLocalPercentage(designu.table.get(i).get("Local Percentage"));
+            du.setLocalPercentage(localPercentage);
             du.setProfilerId(profilingData.getId());
+            designUnitRepository.save(du);
         }
-        designUnitRepository.save(du);
     }
 
 }
