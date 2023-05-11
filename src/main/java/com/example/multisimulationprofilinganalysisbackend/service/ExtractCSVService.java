@@ -13,6 +13,7 @@ import com.example.multisimulationprofilinganalysisbackend.utils.csv.properties.
 import com.example.multisimulationprofilinganalysisbackend.utils.csv.properties.SingleRowCsvProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import java.sql.Timestamp;
 
 import java.util.Objects;
 
@@ -140,9 +141,12 @@ public class ExtractCSVService {
         if (ClusterID != null) {
             profilingDataCluster = profilingDataClustersRepository.getClusterByID(ClusterID);
             profilingData.setProfilingDataCluster(profilingDataCluster);
-        } else {
+
+        } else{
             profilingDataCluster = new profilingDataClusters();
             profilingDataCluster.setClusterName(ClusterName);
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            profilingDataCluster.setStored_date(timestamp.getTime());
             profilingData.setProfilingDataCluster(profilingDataCluster);
             profilingDataClustersRepository.save(profilingDataCluster);
         }

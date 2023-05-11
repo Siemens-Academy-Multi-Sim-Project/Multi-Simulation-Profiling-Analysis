@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.UniqueElements;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,10 @@ public class profilingDataClusters {
     @NotNull
     private String clusterName;
 
+
+    private long Stored_date;
+
+
     public Long getId() {
         return id;
     }
@@ -30,15 +35,15 @@ public class profilingDataClusters {
     public void setId(Long id) {
         this.id = id;
     }
+    public long getStored_date() {
+        return Stored_date;
+    }
+
+    public void setStored_date(long stored_date) {
+        Stored_date = stored_date;
+    }
 
 
-//    public String getClusterID() {
-//        return clusterID;
-//    }
-//
-//    public void setClusterID(String clusterID) {
-//        this.clusterID = clusterID;
-//    }
 
     public String getClusterName() {
         return clusterName;
