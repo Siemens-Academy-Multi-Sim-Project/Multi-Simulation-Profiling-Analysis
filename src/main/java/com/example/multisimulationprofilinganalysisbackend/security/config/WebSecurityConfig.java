@@ -64,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login?logout") // redirect to login page after logout
                 .invalidateHttpSession(true) // invalidate the session
                 .clearAuthentication(true) // clear the authentication
-                .deleteCookies("JSESSIONID"); // delete the JSESSIONID cookie;
+                .deleteCookies("JSESSIONID");// delete the JSESSIONID cookie;
     }
 
 

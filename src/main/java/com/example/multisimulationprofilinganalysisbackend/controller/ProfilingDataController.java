@@ -3,7 +3,7 @@ package com.example.multisimulationprofilinganalysisbackend.controller;
 import com.example.multisimulationprofilinganalysisbackend.dao.ProfilingDataClustersRepository;
 import com.example.multisimulationprofilinganalysisbackend.dao.ProfilingDataRepository;
 import com.example.multisimulationprofilinganalysisbackend.dto.AddProfilingDataRequest;
-import com.example.multisimulationprofilinganalysisbackend.model.CreateClusterDTO;
+import com.example.multisimulationprofilinganalysisbackend.dto.CreateClusterDTO;
 import com.example.multisimulationprofilinganalysisbackend.model.ProfilingData;
 import com.example.multisimulationprofilinganalysisbackend.model.profilingDataClusters;
 
