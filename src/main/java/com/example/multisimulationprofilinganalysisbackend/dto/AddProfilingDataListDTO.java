@@ -2,9 +2,9 @@ package com.example.multisimulationprofilinganalysisbackend.dto;
 import com.example.multisimulationprofilinganalysisbackend.model.ProfilingData;
 import java.util.List;
 
-public class AddProfilingDataRequest {
+public class AddProfilingDataListDTO {
     private String clusterName;
-    private List<ProfilingData> pd;
+    private List<ProfilingData> ProfilingDataList;
 
     public String getClusterName() {
         return clusterName;
@@ -13,11 +13,11 @@ public class AddProfilingDataRequest {
     public void setClusterName(String clusterName) {
         this.clusterName = clusterName;
     }
-    public List<ProfilingData> getPd() {
-        return pd;
+    public List<ProfilingData> getProfilingDataList() {
+        return ProfilingDataList;
     }
     
-    public void setPd(List<ProfilingData> pd) {
-        this.pd = pd;
+    public void setProfilingDataList(List<ProfilingData> ProfilingDataList) {
+        this.ProfilingDataList = ProfilingDataList;
     }
 }

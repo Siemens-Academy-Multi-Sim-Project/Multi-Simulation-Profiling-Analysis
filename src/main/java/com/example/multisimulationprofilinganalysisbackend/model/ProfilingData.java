@@ -115,7 +115,7 @@ public class ProfilingData {
 
     @OneToOne
     @JoinColumn(name="ProfilingDataClusterID", referencedColumnName = "id")
-    private profilingDataClusters profilingDataCluster;
+    private profilingDataClusters profilingDataClusters;
 
 
     public int getTotalSamples() {
@@ -308,11 +308,11 @@ public class ProfilingData {
     public void setDesignUnits(List<DesignUnit> designUnits) {
         this.designUnits = designUnits;
     }
-    public profilingDataClusters getProfilingDataCluster() {
-        return profilingDataCluster;
+    public profilingDataClusters getProfilingDataClusters() {
+        return profilingDataClusters;
     }
 
-    public void setProfilingDataCluster(profilingDataClusters profilingDataCluster) {
-        this.profilingDataCluster = profilingDataCluster;
+    public void setProfilingDataClusters(profilingDataClusters profilingDataClusters) {
+        this.profilingDataClusters = profilingDataClusters;
     }
 }

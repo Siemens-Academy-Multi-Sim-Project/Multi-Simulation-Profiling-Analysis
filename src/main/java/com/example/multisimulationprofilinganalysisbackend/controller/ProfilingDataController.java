@@ -2,7 +2,7 @@ package com.example.multisimulationprofilinganalysisbackend.controller;
 
 import com.example.multisimulationprofilinganalysisbackend.dao.ProfilingDataClustersRepository;
 import com.example.multisimulationprofilinganalysisbackend.dao.ProfilingDataRepository;
-import com.example.multisimulationprofilinganalysisbackend.dto.AddProfilingDataRequest;
+import com.example.multisimulationprofilinganalysisbackend.dto.AddProfilingDataListDTO;
 import com.example.multisimulationprofilinganalysisbackend.dto.CreateClusterDTO;
 import com.example.multisimulationprofilinganalysisbackend.model.ProfilingData;
 import com.example.multisimulationprofilinganalysisbackend.model.profilingDataClusters;
@@ -31,7 +31,7 @@ public class ProfilingDataController {
     @PostMapping("profiling-data/create-cluster")
     public ResponseEntity<Long> createCluster(@RequestBody CreateClusterDTO dto) {
         String name = dto.clusterName;
-        var clusterId = profilingDataClustersRepository.getClusterId(name);
+        var clusterId = profilingDataClustersRepository.findIdByClusterName(name);
         if (clusterId != null) {
             return ResponseEntity.ok(clusterId);
         }
@@ -50,27 +50,27 @@ public class ProfilingDataController {
 
 
     @GetMapping("profiling-data/getDesignsNumber")
-    public ResponseEntity<String> getProfilingDataDesignNumber() {
-        String res = profilingDataRepository.getDesignsNumber();
+    public ResponseEntity<Long> getProfilingDataDesignNumber() {
+        Long res = profilingDataRepository.getDesignsNumber();
         return ResponseEntity.ok(res);
     }
 
     @GetMapping("profiling-data-clusters/getDesignsNumber/{clusterID}")
-    public ResponseEntity<String> getProfilingDataClusterDesignNumber(@PathVariable Long clusterID) {
-        String res = profilingDataClustersRepository.getDesignsNumber(clusterID);
+    public ResponseEntity<Long> getProfilingDataClusterDesignNumber(@PathVariable Long clusterID) {
+        Long res = profilingDataClustersRepository.getDesignsNumber(clusterID);
         return ResponseEntity.ok(res);
     }
 
     @PostMapping("profiling-data-clusters/add")
-    public ResponseEntity<profilingDataClusters> addProfilingDataClusters(@RequestBody AddProfilingDataRequest request) {
+    public ResponseEntity<profilingDataClusters> addProfilingDataClusters(@RequestBody AddProfilingDataListDTO request) {
         profilingDataClusters profilingDataCluster = new profilingDataClusters();
         profilingDataCluster.setClusterName(request.getClusterName());
         profilingDataClustersRepository.save(profilingDataCluster);
         ProfilingData profilingData;
-        List<ProfilingData> pd = request.getPd();
-        for (ProfilingData i : pd) {
+        List<ProfilingData> ProfilingDataList = request.getProfilingDataList();
+        for (ProfilingData i : ProfilingDataList) {
             profilingData = i;
-            profilingData.setProfilingDataCluster(profilingDataCluster);
+            profilingData.setProfilingDataClusters(profilingDataCluster);
             profilingDataRepository.save(profilingData);
             System.out.println(profilingData);
         }
@@ -79,13 +79,13 @@ public class ProfilingDataController {
 
     @GetMapping("profiling-data-clusters/getProfilingData/{clusterID}")
     public ResponseEntity<List<ProfilingData>> getProfilingDataClusterData(@PathVariable Long clusterID) {
-        List<ProfilingData> res = profilingDataRepository.findProfilingDatas(clusterID);
+        List<ProfilingData> res = profilingDataRepository.findByProfilingDataClusterId(clusterID);
         return ResponseEntity.ok(res);
     }
-
+   
     @GetMapping("profiling-data-clusters/getByClusterId/{clusterId}")
     public ResponseEntity<profilingDataClusters> getClusterById(@PathVariable Long clusterId) {
-        profilingDataClusters res = profilingDataClustersRepository.getById(clusterId);
+        profilingDataClusters res = profilingDataClustersRepository.findById(clusterId).get();
         return ResponseEntity.ok(res);
     }
 
