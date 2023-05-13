@@ -140,14 +140,14 @@ public class ExtractCSVService {
         Long ClusterID = profilingDataClustersRepository.getClusterId(ClusterName);
         if (ClusterID != null) {
             profilingDataCluster = profilingDataClustersRepository.getClusterByID(ClusterID);
-            profilingData.setProfilingDataCluster(profilingDataCluster);
+            profilingData.setProfilingDataClusters(profilingDataCluster);
 
         } else{
             profilingDataCluster = new profilingDataClusters();
             profilingDataCluster.setClusterName(ClusterName);
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             profilingDataCluster.setStored_date(timestamp.getTime());
-            profilingData.setProfilingDataCluster(profilingDataCluster);
+            profilingData.setProfilingDataClusters(profilingDataCluster);
             profilingDataClustersRepository.save(profilingDataCluster);
         }
 
