@@ -14,5 +14,5 @@ public interface ProfilingDataRepository extends JpaRepository<ProfilingData, Lo
     @Query(value = "SELECT COUNT(*) FROM (SELECT designcompositionname, designcompositionmodules,designcompositionpackages,designcompositioninterfaces,designcompositioninstances FROM profilingdata GROUP BY designcompositionname, designcompositionmodules,designcompositionpackages,designcompositioninterfaces,designcompositioninstances HAVING COUNT(*) > 0) AS sub", nativeQuery = true)
     Long getDesignsNumber();
 
-    List<ProfilingData> findByProfilingDataClusterId(long Id);
+    List<ProfilingData> findByProfilingDataClustersId(long Id);
 }
