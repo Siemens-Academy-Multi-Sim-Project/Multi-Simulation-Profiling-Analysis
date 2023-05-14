@@ -4,18 +4,21 @@ package com.example.multisimulationprofilinganalysisbackend.registration;
 import com.example.multisimulationprofilinganalysisbackend.appuser.AppUser;
 import com.example.multisimulationprofilinganalysisbackend.appuser.AppUserRole;
 import com.example.multisimulationprofilinganalysisbackend.appuser.AppUserService;
+import com.example.multisimulationprofilinganalysisbackend.dto.LoginDTO;
 import com.example.multisimulationprofilinganalysisbackend.email.EmailBuilder;
 import com.example.multisimulationprofilinganalysisbackend.email.EmailSender;
 import com.example.multisimulationprofilinganalysisbackend.email.EmailValidator;
 import com.example.multisimulationprofilinganalysisbackend.registration.token.ConfirmationToken;
 import com.example.multisimulationprofilinganalysisbackend.registration.token.ConfirmationTokenService;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
 @Service
-public class RegistrationService {
+public class AuthService {
 
     private final AppUserService appUserService;
     private final EmailValidator emailValidator;
@@ -23,7 +26,13 @@ public class RegistrationService {
     private final EmailSender emailSender;
     private final EmailBuilder emailBuilder;
 
-    public RegistrationService(AppUserService appUserService, EmailValidator emailValidator, ConfirmationTokenService confirmationTokenService, EmailSender emailSender, EmailBuilder builder) {
+
+    public AuthService(
+        AppUserService appUserService, 
+        EmailValidator emailValidator, 
+        ConfirmationTokenService confirmationTokenService, 
+        EmailSender emailSender, EmailBuilder builder
+    ) {
         this.appUserService = appUserService;
         this.emailValidator = emailValidator;
         this.confirmationTokenService = confirmationTokenService;
@@ -51,12 +60,16 @@ public class RegistrationService {
                 )
         );
 
-        String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
+        String link = "http://localhost:8080/auth/confirm?token=" + token;
         emailSender.send(
                 request.getEmail(),
                 emailBuilder.confirmationEmail(request.getFirstName(), link));
 
         return token;
+    }
+
+    public boolean checkUser(LoginDTO loginDTO){
+        return appUserService.checkUser(loginDTO);
     }
 
     @Transactional

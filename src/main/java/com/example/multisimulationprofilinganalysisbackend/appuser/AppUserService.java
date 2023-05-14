@@ -1,6 +1,7 @@
 package com.example.multisimulationprofilinganalysisbackend.appuser;
 
 
+import com.example.multisimulationprofilinganalysisbackend.dto.LoginDTO;
 import com.example.multisimulationprofilinganalysisbackend.email.EmailBuilder;
 import com.example.multisimulationprofilinganalysisbackend.email.EmailSender;
 import com.example.multisimulationprofilinganalysisbackend.registration.token.ConfirmationToken;
@@ -89,5 +90,21 @@ public class AppUserService implements UserDetailsService {
 
     public int enableAppUser(String email) {
         return appUserRepository.enableAppUser(email);
+    }
+
+
+    public boolean checkUser(LoginDTO loginDTO){
+        String email = loginDTO.getEmail();
+        String password = loginDTO.getPassword();
+        if(email.equals("") || password.equals("")) return false;
+            
+        var userOptional = appUserRepository.findByEmail(email);
+
+        if(!userOptional.isPresent()) return false;
+
+        var actualUserPassword = userOptional.get().getPassword();
+
+        return bCryptPasswordEncoder.matches(password, actualUserPassword);
+
     }
 }
