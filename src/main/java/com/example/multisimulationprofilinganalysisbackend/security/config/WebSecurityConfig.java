@@ -57,9 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/auth/**")
                 .permitAll()
-                .anyRequest()
-                .authenticated().and()
-                .formLogin().and()
+                .anyRequest().authenticated().and()
                 .logout()
                 .logoutSuccessUrl("/login?logout") // redirect to login page after logout
                 .invalidateHttpSession(true) // invalidate the session

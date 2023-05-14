@@ -1,10 +1,13 @@
 package com.example.multisimulationprofilinganalysisbackend.registration;
 
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.example.multisimulationprofilinganalysisbackend.dto.ConfirmTokenDTO;
 import com.example.multisimulationprofilinganalysisbackend.dto.LoginDTO;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 
@@ -16,21 +19,28 @@ public class AuthController {
         this.authService = authService;
     }
     @PostMapping("register")
-    public ResponseEntity<String> register(@RequestBody RegistrationRequest request) {
+    public ResponseEntity<ConfirmTokenDTO> register(@RequestBody RegistrationRequest request) {
         try{
             var registerationToken = authService.register(request);
-            return ResponseEntity.ok(registerationToken);
+            return ResponseEntity.ok(
+                new ConfirmTokenDTO(registerationToken)
+            );
         }catch(IllegalStateException exception){
-            return ResponseEntity.badRequest().body(exception.getMessage());
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                exception.getMessage()
+            );
         }
     }
 
     // since we're using basic auth. this endpoints only checks if the user creds are valid
     @PostMapping("login")
-    public ResponseEntity<Boolean> login(@RequestBody LoginDTO loginDto){
-        return ResponseEntity.ok(
-            authService.checkUser(loginDto)
-        );
+    public ResponseEntity login(@RequestBody LoginDTO loginDto){
+        var userExists = authService.checkUser(loginDto);
+        
+        return userExists
+            ? ResponseEntity.ok().build()
+            : ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
     @GetMapping(path = "confirm")

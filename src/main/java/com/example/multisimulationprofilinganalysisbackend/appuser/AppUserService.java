@@ -97,18 +97,14 @@ public class AppUserService implements UserDetailsService {
         String email = loginDTO.getEmail();
         String password = loginDTO.getPassword();
         if(email.equals("") || password.equals("")) return false;
-        
-
-
-        String encryptedPassword = this.bCryptPasswordEncoder.encode(password);
-        
+            
         var userOptional = appUserRepository.findByEmail(email);
 
         if(!userOptional.isPresent()) return false;
 
-        var actualUser = userOptional.get();
+        var actualUserPassword = userOptional.get().getPassword();
 
-        return actualUser.getPassword().equals(encryptedPassword);
+        return bCryptPasswordEncoder.matches(password, actualUserPassword);
 
     }
 }
