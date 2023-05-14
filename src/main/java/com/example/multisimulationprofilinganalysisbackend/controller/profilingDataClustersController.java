@@ -25,24 +25,14 @@ public class profilingDataClustersController {
     public  ArrayList<profilingDataClusters> GetRecentClusters() throws Exception {
         List<profilingDataClusters> all = new ArrayList<profilingDataClusters>(); // Create an ArrayList object
         all=this.ProfilingDataClustersRepository.findAll();
-      //  all.sort(Collections.reverseOrder());
         Collections.reverse(all);
-
-        Iterable<profilingDataClusters>  listOfProfilingDataClusters =all;
         ArrayList<profilingDataClusters> RecentCluster = new ArrayList<profilingDataClusters>(); // Create an ArrayList object
 
-        final int[] i = {0};
-        listOfProfilingDataClusters.forEach((p) -> {
-            if(i[0] <5){
-                RecentCluster.add(p);
+        int numberOfClustrers=Math.min(all.size(),5);
+        for (int i = 0; i < numberOfClustrers; i++) {
+            RecentCluster.add(all.get(i));
 
-            }
-            i[0]++;
-        });
-        for (int j = 0; j < RecentCluster.size(); j++) {
-            System.out.println(RecentCluster.get(j));
         }
-
         return RecentCluster;
 
 
