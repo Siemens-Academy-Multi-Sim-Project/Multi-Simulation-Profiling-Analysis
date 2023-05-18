@@ -1,6 +1,5 @@
 package com.example.multisimulationprofilinganalysisbackend.registration;
 
-
 import com.example.multisimulationprofilinganalysisbackend.appuser.AppUser;
 import com.example.multisimulationprofilinganalysisbackend.appuser.AppUserRole;
 import com.example.multisimulationprofilinganalysisbackend.appuser.AppUserService;
@@ -11,7 +10,7 @@ import com.example.multisimulationprofilinganalysisbackend.email.EmailValidator;
 import com.example.multisimulationprofilinganalysisbackend.registration.token.ConfirmationToken;
 import com.example.multisimulationprofilinganalysisbackend.registration.token.ConfirmationTokenService;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,6 +18,8 @@ import java.time.LocalDateTime;
 
 @Service
 public class AuthService {
+    @Value("${app.link}")
+    private String appLink;
 
     private final AppUserService appUserService;
     private final EmailValidator emailValidator;
@@ -60,7 +61,7 @@ public class AuthService {
                 )
         );
 
-        String link = "http://localhost:8080/auth/confirm?token=" + token;
+        String link = appLink + token;
         emailSender.send(
                 request.getEmail(),
                 emailBuilder.confirmationEmail(request.getFirstName(), link));

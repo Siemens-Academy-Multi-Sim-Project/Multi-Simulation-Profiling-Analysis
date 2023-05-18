@@ -31,7 +31,6 @@ public class profilingDataClustersController {
         int numberOfClustrers=Math.min(all.size(),5);
         for (int i = 0; i < numberOfClustrers; i++) {
             RecentCluster.add(all.get(i));
-
         }
         return RecentCluster;
 
